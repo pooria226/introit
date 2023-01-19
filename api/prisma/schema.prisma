@@ -1,0 +1,2768 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+///////////////////////////////////////////////// TABLES ////////////////////////////////////////////////////////
+
+enum DOMAINS {
+  app
+  site
+  basic
+}
+
+enum NOTIFICATIONS {
+  sms
+  email
+  alert
+  message
+}
+
+//================================================================== Languages
+model languages {
+
+  //Common Fields-----------------
+  id                       Int                         @default(autoincrement()) @id 
+  isLive                   Boolean                     @default(true)
+  createdAt                DateTime                    @default(now())  @db.Timestamptz(3)
+  updatedAt                DateTime?                   @updatedAt       @db.Timestamptz(3)
+  createdBy                Int?
+  updatedBy                Int?
+
+  //Required Fields---------------
+  code                     String                      @db.VarChar(255) @unique
+  slug                     String?                     @db.VarChar(255) @unique
+  title                    String                      @db.VarChar(255) @unique
+  isRtl                    Boolean                     @default(false)
+  isDefault                Boolean                     @default(false)   
+  isOnList                 Boolean                     @default(false)   
+  isOnLine                 Boolean                     @default(false)   
+  flagId                   String?                     @db.Text
+  bannerId                 String?                     @db.Text
+  about                    String?                     @db.Text
+  website                  String?                     @db.Text
+  
+  //Childs -----------------------
+  users                    users[]                     @relation("LANGUAGE_USERS")
+  usersLanguages           userLanguages[]             @relation("LANGUAGE_USERS_LANGUAGES")
+  jobs                     companyJobs[]               @relation("LANGUAGE_JOBS") 
+  translations             languagesTs[]               @relation("LANGUAGE_TRANSLATIONS")
+
+  //Translations -----------------------
+  languageTs               languagesTs[]               @relation("LANGUAGES_TRANSLATIONS")
+  toastTs                  toastsTs[]                  @relation("TOASTS_TRANSLATIONS")
+  sectionTs                sectionsTs[]                @relation("SECTIONS_TRANSLATIONS")
+  labelTs                  labelsTs[]                  @relation("LABELES_TRANSLATIONS")
+  countryTs                countriesTs[]               @relation("COUNTRIES_TRANSLATIONS")
+  stateTs                  statesTs[]                  @relation("STATES_TRANSLATIONS")
+  cityTs                   citiesTs[]                  @relation("CITIES_TRANSLATIONS")
+  nationalityTs            nationalitiesTs[]           @relation("NATIONALITIES_TRANSLATIONS")
+  currencyTs               currenciesTs[]              @relation("CURRENCIES_TRANSLATIONS")
+  dayTs                    daysTs[]                    @relation("DAYS_TRANSLATIONS")
+  genderTs                 gendersTs[]                 @relation("GENDERS_TRANSLATIONS")
+  drivingLicenseTs         drivingLicensesTs[]         @relation("DRIVINGLICENSES_TRANSLATIONS")
+  industryTs               industriesTs[]              @relation("INDUSTRIES_TRANSLATIONS")
+  skillTs                  skillsTs[]                  @relation("SKILLS_TRANSLATIONS")
+  timezoneTs               timezonesTs[]               @relation("TIMEZONES_TRANSLATIONS")
+  languageCertificateTs    languageCertificatesTs[]    @relation("LANGUAGECERTIFICATES_TRANSLATIONS")
+  languageLevelTs          languageLevelsTs[]          @relation("LANGUAGELEVELS_TRANSLATIONS")
+  dominationLevelTs        dominationLevelsTs[]        @relation("DOMINATIONLEVELS_TRANSLATIONS")
+  academicLevelTs          academicLevelsTs[]          @relation("ACADEMICLEVELS_TRANSLATIONS")
+  employmentTypeTs         employmentTypesTs[]         @relation("EMPLOYMENTTYPES_TRANSLATIONS")
+  timePeriodTs             timePeriodsTs[]             @relation("TIMEPERIODS_TRANSLATIONS")
+  jobStatusTs              jobStatusTs[]               @relation("JOBSTATUSES_TRANSLATIONS")
+  applicationResultTs      applicationResultsTs[]      @relation("APPLICATIONS_TRANSLATIONS")
+  jobQuestionCategoryTs    jobQuestionsCategoriesTs[]  @relation("JOBQUESTIONCATEGORIES_TRANSLATIONS")
+  socialMediaTs            socialsTs[]                 @relation("SOCIALMEDIAS_TRANSLATIONS")
+  themeTs                  themesTs[]                  @relation("THEMES_TRANSLATIONS")
+  securityQuestionTs       securityQuestionsTs[]       @relation("SECURITYQUESTIONS_TRANSLATIONS")
+  menuTs                   menusTs[]                   @relation("MENUS_TRANSLATIONS")
+  moduleTs                 modulesTs[]                 @relation("MODULES_TRANSLATIONS")
+  roleTs                   rolesTs[]                   @relation("ROLES_TRANSLATIONS")
+  salaryPeriodTs           salaryPeriodsTs[]           @relation("SALARY_PERIODS_TRANSLATIONS")
+
+}
+
+//================================================================== Language Translations
+model languagesTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+  about             String?            @db.Text
+
+  //Parents ----------------------------------------------
+  recordId         Int?
+  record           languages?          @relation("LANGUAGE_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId       Int?
+  language         languages?          @relation("LANGUAGES_TRANSLATIONS", fields: [languageId], references: [id])  
+
+}
+
+//================================================================== Toasts
+model toasts {
+  
+  //Common Fields-----------------
+  id            Int         @default(autoincrement()) @id
+  isLive        Boolean     @default(true)
+  createdAt     DateTime    @default(now())  @db.Timestamptz(3)
+  updatedAt     DateTime?   @updatedAt       @db.Timestamptz(3)
+  createdBy     Int?
+  updatedBy     Int?
+
+  //Required Fields---------------
+  slug          String?     @db.Text @unique 
+  title         String?     @db.Text @unique 
+  message       String      @db.Text
+
+  //Childs ------------------
+  translations  toastsTs[]  @relation("TOAST_TRANSLATIONS")
+
+}
+
+//================================================================== Toast Translations
+model toastsTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  message           String             @db.Text
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            toasts?            @relation("TOAST_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("TOASTS_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== UI Sections
+model sections {
+  
+  //Common Fields-----------------
+  id               Int             @default(autoincrement()) @id
+  isLive           Boolean         @default(true)
+  createdAt        DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt        DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy        Int?
+  updatedBy        Int?
+
+  //Required Fields---------------
+  slug             String?         @db.Text
+  title            String          @db.Text
+  domain           DOMAINS         @default(basic)    
+
+  //Childs ------------------
+  translations     sectionsTs[]    @relation("SECTION_TRANSLATIONS")
+  labels           labels[]        @relation("SECTION_LABELS")
+  
+  //Compound Uinique--------------
+  @@unique([title, domain], name: "uniqueField")
+}
+
+//================================================================== UI Section Translations
+model sectionsTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+  domain            String?            @db.VarChar(255)
+  
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            sections?          @relation("SECTION_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("SECTIONS_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== UI Labels
+model labels {
+  
+  //Common Fields-----------------
+  id            Int         @default(autoincrement()) @id
+  isLive        Boolean     @default(true)
+  createdAt     DateTime    @default(now())  @db.Timestamptz(3)
+  updatedAt     DateTime?   @updatedAt       @db.Timestamptz(3)
+  createdBy     Int?
+  updatedBy     Int?
+
+  //Required Fields---------------
+  slug          String?     @db.Text
+  title         String?     @db.Text
+
+  //Parents ----------------------------------------------
+  sectionId     Int?
+  section       sections?   @relation("SECTION_LABELS", fields: [sectionId], references: [id])
+
+  //Childs ------------------
+  translations  labelsTs[]  @relation("LABEL_TRANSLATIONS")
+
+  //Compound Uinique--------------
+  @@unique([title, sectionId], name: "uniqueField")
+}
+
+//================================================================== UI Label Translations
+model labelsTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            labels?            @relation("LABEL_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("LABELES_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Countries
+model countries {
+
+  //Common Fields ---------------------------------------
+  id                Int                @id              @default(autoincrement())
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------   
+  code              String?            @db.VarChar(255) @unique
+  prefix            String?            @db.VarChar(255)
+  slug              String?            @db.VarChar(255) @unique
+  title             String?            @db.VarChar(255) @unique
+  flagId            String?            @db.Text
+  bannerId          String?            @db.Text
+  about             String?            @db.Text
+  website           String?            @db.Text
+  coordinates       String[]
+
+  //Childs -----------------------
+  states            states[]           @relation("COUNTRY_STATES")
+  births            users[]            @relation("COUNTRY_BIRTHED_USERS")  // people who born in this country
+  inhabitants       users[]            @relation("COUNTRY_RESIDENT_USERS") // residents this country
+  graduatedUsers    userEducations[]   @relation("COUNTRY_EDUCATED_USERS")
+  experiencedUsers  userExperiences[]  @relation("COUNTRY_EXPERIENCED_USERS")
+  activityUsers     userExtraActivities[] @relation("COUNTRY_ACTIVITY_USERS")
+  intershioedUsers  userInterships[]      @relation("COUNTRY_INTERSHIP_USERS")
+  companies         userCompanies[]       @relation("COUNTRY_COMPANIES")
+  translations      countriesTs[]         @relation("COUNTRY_TRANSLATIONS")
+
+}
+
+//================================================================== Country Translations
+model countriesTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+  about             String?            @db.Text
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            countries?         @relation("COUNTRY_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("COUNTRIES_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== States
+model states {
+
+  //Common Fields-----------------
+  id                 Int               @default(autoincrement()) @id
+  isLive             Boolean           @default(true)
+  createdAt          DateTime          @default(now())   @db.Timestamptz(3)
+  updatedAt          DateTime?         @updatedAt        @db.Timestamptz(3)
+  createdBy          Int?
+  updatedBy          Int?
+
+  //Required Fields---------------
+  slug               String?            @db.VarChar(255)
+  title              String?            @db.VarChar(255)
+  prefix             String?            @db.VarChar(255)
+  flagId             String?            @db.Text
+  bannerId           String?            @db.Text
+  about              String?            @db.Text
+  website            String?            @db.Text
+  coordinates        String[]
+
+  //Parents ----------------------------------------------
+  countryId          Int?
+  country            countries?            @relation("COUNTRY_STATES", fields: [countryId], references: [id])
+
+  //Childs -----------------------
+  cities             cities[]              @relation("STATE_CITIES")
+  births             users[]               @relation("STATE_BIRTHED_USERS")
+  graduatedUsers     userEducations[]      @relation("STATE_EDUCATED_USERS")
+  experiencedUsers   userExperiences[]     @relation("STATE_EXPERIENCED_USERS")
+  activityUsers      userExtraActivities[] @relation("STATE_ACTIVITY_USERS")
+  intershioedUsers   userInterships[]      @relation("STATE_INTERSHIP_USERS")
+  inhabitants        users[]               @relation("STATE_RESIDENT_USERS")
+  translations       statesTs[]            @relation("STATE_TRANSLATIONS")
+
+  //Compound Uinique--------------
+  @@unique([title, countryId], name: "uniqueField")
+
+}
+
+//================================================================== State Translations
+model statesTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+  about             String?            @db.Text
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            states?            @relation("STATE_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("STATES_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Cities
+model cities {
+
+  //Common Fields-----------------
+  id                 Int               @default(autoincrement()) @id
+  isLive             Boolean           @default(true)
+  createdAt          DateTime          @default(now())   @db.Timestamptz(3)
+  updatedAt          DateTime?         @updatedAt        @db.Timestamptz(3)
+  createdBy          Int?
+  updatedBy          Int?
+
+  //Required Fields---------------
+  slug               String?            @db.VarChar(255)
+  title              String?            @db.VarChar(255)
+  prefix             String?            @db.VarChar(255)
+  bannerId           String?            @db.Text
+  about              String?            @db.Text
+  website            String?            @db.Text
+  coordinates        String[]
+
+  //Parents ----------------------------------------------
+  stateId            Int?
+  state              states?           @relation("STATE_CITIES", fields: [stateId], references: [id])
+  
+  //Childs -----------------------
+  births             users[]               @relation("CITY_BIRTHED_USERS")
+  inhabitants        users[]               @relation("CITY_RESIDENT_USERS")
+  graduatedUsers     userEducations[]      @relation("CITY_EDUCATED_USERS")
+  experiencedUsers   userExperiences[]     @relation("CITY_EXPERIENCED_USERS")
+  activityUsers      userExtraActivities[] @relation("CITY_ACTIVITY_USERS")
+  intershioedUsers   userInterships[]      @relation("CITY_INTERSHIP_USERS")
+  translations       citiesTs[]            @relation("CITY_TRANSLATIONS")
+
+  //Compound Uinique--------------
+  @@unique([title, stateId], name: "uniqueField")
+
+}
+
+//================================================================== City Translations
+model citiesTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+  about             String?            @db.Text
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            cities?            @relation("CITY_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("CITIES_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Nationalities
+model nationalities {
+
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id 
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------  
+  slug              String?            @db.VarChar(255) @unique
+  title             String?            @db.VarChar(255) @unique
+  flagId            String?            @db.Text
+  bannerId          String?            @db.Text
+  about             String?            @db.Text
+  
+  //Childs -----------------------
+  citizens            users[]           @relation("COUNTRY_CITIZEN_USERS")  // citizens of this country
+  translations        nationalitiesTs[] @relation("NATIONALITY_TRANSLATIONS")
+
+}
+
+//================================================================== Nationality Translations
+model  nationalitiesTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+  about             String?            @db.Text
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            nationalities?     @relation("NATIONALITY_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("NATIONALITIES_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+
+//================================================================== Currencies
+model currencies {
+
+  //Common Fields-----------------
+  id                Int              @default(autoincrement()) @id 
+  isLive            Boolean          @default(true)
+  createdAt         DateTime         @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?        @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields--------------- 
+  code              String?          @db.VarChar(255)
+  symbol            String?          @db.VarChar(255)
+  slug              String?          @db.VarChar(255) @unique
+  title             String?          @db.VarChar(255) @unique
+  
+  //Childs -----------------------
+  users             users[]          @relation("CURRENCY_USERS") 
+  jobs              companyJobs[]    @relation("CURRENCY_JOBS") 
+  translations      currenciesTs[]   @relation("CURRENCY_TRANSLATIONS")
+
+}
+
+//================================================================== Currencies Translations
+model  currenciesTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            currencies?        @relation("CURRENCY_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("CURRENCIES_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+
+//================================================================== Days
+model days {
+
+  // Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday 
+  //Common Fields-----------------
+  id                Int               @default(autoincrement()) @id 
+  isLive            Boolean           @default(true)
+  createdAt         DateTime          @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?         @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  slug              String?           @db.VarChar(255) @unique
+  title             String?           @db.VarChar(255) @unique
+
+  //Childs -----------------------
+  translations      daysTs[]   @relation("DAY_TRANSLATIONS")
+
+}
+
+//================================================================== Days Translations
+model  daysTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            days?              @relation("DAY_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("DAYS_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Genders
+model genders {
+
+  //Common Fields-----------------
+  id                Int               @default(autoincrement()) @id 
+  isLive            Boolean           @default(true)
+  createdAt         DateTime          @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?         @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  slug              String?           @db.VarChar(255) @unique
+  title             String?           @db.VarChar(255) @unique
+
+  //Childs -----------------------
+  users             users[]           @relation("GENDER_USERS") 
+  translations      gendersTs[]       @relation("GENDER_TRANSLATIONS")
+
+}
+
+//================================================================== Genders Translations
+model  gendersTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            genders?           @relation("GENDER_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("GENDERS_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Driving Licenses
+model drivingLicenses {
+
+  //Common Fields-----------------
+  id                Int              @default(autoincrement()) @id 
+  isLive            Boolean          @default(true)
+  createdAt         DateTime         @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?        @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  slug              String?             @db.VarChar(255) @unique
+  title             String?             @db.VarChar(255) @unique
+  
+  //Childs -----------------------
+  users             users[]             @relation("DRIVING_LICENSE_USERS") 
+  jobs              companyJobs[]       @relation("DRIVING_LICENSE_JOBS") 
+  translations      drivingLicensesTs[] @relation("DRIVINGLICENSE_TRANSLATIONS")
+
+}
+
+//================================================================== Driving Licenses Translations
+model  drivingLicensesTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255) @unique
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            drivingLicenses?   @relation("DRIVINGLICENSE_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("DRIVINGLICENSES_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Industries
+model industries {
+
+  //Common Fields ---------------------------------------
+  id                  Int              @id              @default(autoincrement())
+  isLive              Boolean          @default(true)
+  createdAt           DateTime         @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?        @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------   
+  icon                String?          @db.Text
+  slug                String?          @db.VarChar(255) @unique
+  title               String?          @db.VarChar(255) @unique
+
+  //Childs -----------------------
+  users               users[]          @relation("INDUSTRY_USERS")
+  companies           userCompanies[]  @relation("INDUSTRY_COMPANIES")
+  // skills              skills[]         @relation("INDUSTRY_SKILLS")
+  jobs                companyJobs[]    @relation("INDUSTRY_JOBS")
+  translations        industriesTs[]   @relation("INDUSTRY_TRANSLATIONS")
+
+}
+
+//================================================================== Industries Translations
+model  industriesTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            industries?        @relation("INDUSTRY_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("INDUSTRIES_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//==================================================================  Skills
+model skills {
+
+  //Common Fields ---------------------------------------
+  id                  Int             @id              @default(autoincrement())
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------   
+  slug                String?         @db.VarChar(255) @unique
+  title               String?         @db.VarChar(255) @unique
+
+  //Parents ----------------------------------------------
+  // industryId          Int?
+  // industry            industries?     @relation("INDUSTRY_SKILLS", fields: [industryId], references: [id])
+
+  //Childs -----------------------
+  jobs                jobSkills[]     @relation("SKILL_JOBS")
+  translations        skillsTs[]      @relation("SKILL_TRANSLATIONS")
+
+}
+
+//================================================================== Skills Translations
+model  skillsTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            skills?            @relation("SKILL_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("SKILLS_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Timezones
+model timezones {
+
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id 
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  offset              String? 
+  slug                String?          @db.VarChar(255) @unique
+  title               String?          @db.VarChar(255) @unique
+
+  //Childs -----------------------
+  users               users[]          @relation("TIMEZONE_USERS")
+  jobs                companyJobs[]    @relation("TIMEZONE_JOBS") 
+  translations        timezonesTs[]    @relation("TIMEZONE_TRANSLATIONS")
+
+}
+
+//================================================================== Timezones Translations
+model  timezonesTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            timezones?         @relation("TIMEZONE_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("TIMEZONES_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Language Certificates
+model languageCertificates {
+
+  //none, a1, a2, b1, b2, c1, c2
+  //Common Fields-----------------
+  id                  Int              @default(autoincrement()) @id 
+  isLive              Boolean          @default(true)
+  createdAt           DateTime         @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?        @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  slug                String?          @db.VarChar(255) @unique
+  title               String?          @db.VarChar(255) @unique
+
+  //Childs -----------------------
+  users               userLanguages[]  @relation("CERTIFICATE_USER_LANGUAGES") 
+  translations        languageCertificatesTs[]    @relation("LANGUAGECERTIFICATE_TRANSLATIONS")
+
+}
+
+//================================================================== Language Certificates Translations
+model  languageCertificatesTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            languageCertificates? @relation("LANGUAGECERTIFICATE_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?            @relation("LANGUAGECERTIFICATES_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Language Levels
+model languageLevels {
+
+  //Begginer, Intermediate, Upper-Intermediate, Advanced, Proficient or Fluent, Native or Bilingual 
+  //Common Fields-----------------
+  id                  Int              @default(autoincrement()) @id 
+  isLive              Boolean          @default(true)
+  createdAt           DateTime         @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?        @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  slug                String?          @db.VarChar(255) @unique
+  title               String?          @db.VarChar(255) @unique
+
+  //Childs -----------------------
+  users               userLanguages[]     @relation("LANG_LEVEL_USER_LANGUAGES") 
+  translations        languageLevelsTs[]  @relation("LANGUAGELEVEL_TRANSLATIONS")
+
+}
+
+//================================================================== Language Levels Translations
+model  languageLevelsTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            languageLevels?    @relation("LANGUAGELEVEL_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("LANGUAGELEVELS_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Domination Levels
+model dominationLevels {
+
+  //Novice, Beginner, Intermediate, Experienced
+  //Common Fields-----------------
+  id                  Int               @default(autoincrement()) @id 
+  isLive              Boolean           @default(true)
+  createdAt           DateTime          @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?         @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  slug                String?           @db.VarChar(255) @unique
+  title               String?           @db.VarChar(255) @unique
+
+  //Childs -----------------------
+  userskills          userSkills[]      @relation("DOMINATION_USER_SKILLS") 
+  userExpertises      userExpertises[]  @relation("DOMINATION_USER_EXPERTISES") 
+  translations        dominationLevelsTs[]  @relation("DOMINATIONLEVEL_TRANSLATIONS")
+
+}
+
+//================================================================== Domination Levels Translations
+model  dominationLevelsTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            dominationLevels?  @relation("DOMINATIONLEVEL_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("DOMINATIONLEVELS_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Academic Levels
+model academicLevels {
+
+  //Diploma, Bachelor, Master, Phd
+  //Common Fields-----------------
+  id                  Int                @default(autoincrement()) @id 
+  isLive              Boolean            @default(true)
+  createdAt           DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  slug                String?            @db.VarChar(255) @unique
+  title               String?            @db.VarChar(255) @unique
+
+  //Childs -----------------------
+  educations          userEducations[]   @relation("ACADEMIC_LEVEL_USER_EDUCATIONS")
+  jobs                companyJobs[]      @relation("ACADEMIC_LEVEL_JOBS")
+  users               users[]            @relation("DEGREE_USERS")
+  translations        academicLevelsTs[] @relation("ACADEMICLEVEL_TRANSLATIONS")
+
+}
+
+//================================================================== Academic Levels Translations
+model  academicLevelsTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            academicLevels?    @relation("ACADEMICLEVEL_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("ACADEMICLEVELS_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Employment Types
+model employmentTypes {
+  
+  //FullTime, PartTime, Contract, Internship, Volunteer
+  //Common Fields-----------------
+  id                  Int                  @default(autoincrement()) @id 
+  isLive              Boolean              @default(true)
+  createdAt           DateTime             @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?            @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  slug                String?              @db.VarChar(255) @unique
+  title               String?              @db.VarChar(255) @unique
+
+  //Childs -----------------------
+  jobs                companyJobs[]        @relation("EMPLOYMENT_TYPE_JOBS") 
+  members             companyMembers[]     @relation("EMPLOYMENT_TYPE_MEMBERS") 
+  experiences         userExperiences[]    @relation("USER_EXPERIENCES_EMPLOYMENT_TYPES") 
+  translations        employmentTypesTs[]  @relation("EMPLOYMENTTYPE_TRANSLATIONS")
+
+}
+
+//================================================================== Employment Types Translations
+model  employmentTypesTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            employmentTypes?   @relation("EMPLOYMENTTYPE_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("EMPLOYMENTTYPES_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Time Periods
+model timePeriods {
+  // Hourly, Daily, Weekly, Monthly, Annual
+  //Common Fields-----------------
+  id                  Int                @default(autoincrement()) @id 
+  isLive              Boolean            @default(true)
+  createdAt           DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  slug                String?            @db.VarChar(255) @unique
+  title               String?            @db.VarChar(255) @unique
+  
+  //Childs -----------------------
+  jobs                companyJobs[]      @relation("SALARY_TYPE_JOBS")
+  membersRate         companyMembers[]   @relation("RATE_CONDITIONS")
+  membersOvertime     companyMembers[]   @relation("OVERTIME_CONDITIONS")
+  membersWeekend      companyMembers[]   @relation("WEEKEND_CONDITIONS")
+  membersBank         companyMembers[]   @relation("BANKHOLIDAYS_CONDITIONS")
+  translations        timePeriodsTs[]    @relation("TIMEPERIOD_TRANSLATIONS")
+
+}
+
+//================================================================== Time Periods Translations
+model  timePeriodsTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            timePeriods?       @relation("TIMEPERIOD_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("TIMEPERIODS_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Job Status
+model jobStatus {
+  // new, hold, suspend, disabled, published, closed, expired
+  //Common Fields-----------------
+  id                  Int                @default(autoincrement()) @id 
+  isLive              Boolean            @default(true)
+  createdAt           DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  slug                String?            @db.VarChar(255) @unique
+  title               String?            @db.VarChar(255) @unique
+  
+  //Childs -----------------------
+  jobs                companyJobs[]      @relation("STATUS_JOBS") 
+  translations        jobStatusTs[]      @relation("JOBSTATUS_TRANSLATIONS")
+
+}
+
+//================================================================== Job Status Translations
+model  jobStatusTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            jobStatus?         @relation("JOBSTATUS_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("JOBSTATUSES_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Job Application Results
+model applicationResults {
+  //Reviewed, Scheduled, Accepted, Rejected
+  //Common Fields-----------------
+  id                  Int                @default(autoincrement()) @id 
+  isLive              Boolean            @default(true)
+  createdAt           DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  slug                String?            @db.VarChar(255) @unique
+  title               String?            @db.VarChar(255) @unique
+  
+  //Childs -----------------------
+  jobs                applications[]         @relation("APPLICATION_RESULT_JOBS") 
+  translations        applicationResultsTs[] @relation("APPLICATION_TRANSLATIONS")
+
+}
+
+//================================================================== Application Results Translations
+model  applicationResultsTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String              @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            applicationResults? @relation("APPLICATION_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?          @relation("APPLICATIONS_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Job Questions Categories
+model jobQuestionsCategories {
+  // Availibility, Education, Licenses & Certificate, Skills & Knowladge, Location, Other Information
+  //Common Fields-----------------
+  id                  Int                @default(autoincrement()) @id 
+  isLive              Boolean            @default(true)
+  createdAt           DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  slug                String?            @db.VarChar(255) @unique
+  title               String?            @db.VarChar(255) @unique
+  
+  //Childs -----------------------
+  questions           jobQuestions[]     @relation("CATEGORY_QUESTIONS") 
+  translations        jobQuestionsCategoriesTs[] @relation("JOBQUESTIONCATEGORY_TRANSLATIONS")
+
+}
+
+//================================================================== Job Questions Translations
+model  jobQuestionsCategoriesTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String              @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            jobQuestionsCategories? @relation("JOBQUESTIONCATEGORY_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?          @relation("JOBQUESTIONCATEGORIES_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Social Media Websites
+model socials {
+
+  //Common Fields-----------------
+  id                  Int               @default(autoincrement()) @id 
+  isLive              Boolean           @default(true)
+  createdAt           DateTime          @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?         @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  website             String?           @db.Text @unique
+  icon_id             String?           @db.Text  
+  slug                String?           @db.VarChar(255) @unique
+  title               String?           @db.VarChar(255) @unique
+
+  //Childs -----------------------
+  users               userSocials[]     @relation("SOCIAL_USERS") 
+  companies           companySocials[]  @relation("SOCIAL_COMPANIES") 
+  translations        socialsTs[]       @relation("SOCIALMEDIA_TRANSLATIONS")
+
+}
+
+//================================================================== Social Media Translations
+model  socialsTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String              @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            socials?            @relation("SOCIALMEDIA_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?          @relation("SOCIALMEDIAS_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Themes
+model themes {
+  
+  //Light, Dark, Cyan
+  //Common Fields-----------------
+  id            Int          @default(autoincrement()) @id 
+  isLive        Boolean      @default(true)
+  createdAt     DateTime     @default(now())  @db.Timestamptz(3)
+  updatedAt     DateTime?    @updatedAt       @db.Timestamptz(3)
+  createdBy     Int?
+  updatedBy     Int?
+
+  //Required Fields---------------
+  slug          String?      @db.VarChar(255) @unique
+  title         String?      @db.VarChar(255) @unique
+  isDefault     Boolean
+  
+  //Childs -----------------------
+  users         users[]      @relation("THEME_USERS") 
+  translations  themesTs[]   @relation("THEME_TRANSLATIONS")
+
+}
+
+//================================================================== Themes Translations
+model  themesTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String              @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            themes?             @relation("THEME_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?          @relation("THEMES_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Security Questions
+model securityQuestions {
+
+  //Common Fields ---------------------------------------
+  id                  Int             @id              @default(autoincrement())
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Main Fields -----------------------------------------
+  slug                String?         @db.VarChar(255) @unique
+  title               String?         @db.VarChar(255) @unique  
+
+  //Childs ----------------------------------------------
+  q1Users             users[]         @relation("QUESTION1_USERS")  
+  q2Users             users[]         @relation("QUESTION2_USERS")  
+  q3Users             users[]         @relation("QUESTION3_USERS")  
+  translations        securityQuestionsTs[]   @relation("SECURITYQUESTION_TRANSLATIONS")
+
+}
+
+//================================================================== Security Question Translations
+model  securityQuestionsTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String              @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            securityQuestions?  @relation("SECURITYQUESTION_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?          @relation("SECURITYQUESTIONS_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Menus
+model menus {
+  
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  sort                Int
+  slug                String?         @db.VarChar(255) @unique
+  title               String?         @db.VarChar(255) @unique
+
+  //Childs -----------------------
+  modules             modules[]       @relation("MENU_MODULES") 
+  translations        menusTs[]       @relation("MENU_TRANSLATIONS")
+
+}
+
+//================================================================== Menu Translations
+model  menusTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String              @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            menus?              @relation("MENU_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?          @relation("MENUS_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Modules
+model modules {
+  
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  sort                Int?
+  slug                String?         @db.VarChar(255)
+  title               String?         @db.VarChar(255)
+  operations          String[]
+
+  //Parents ----------------------
+  menuId              Int?
+  menu                menus?          @relation("MENU_MODULES", fields: [menuId], references: [id])
+
+  //Childs ----------------------------------------------
+  permissions         permissions[]   @relation("MODULE_PERMISSIONS")
+  translations        modulesTs[]     @relation("MODULE_TRANSLATIONS")
+
+  //Compound Uinique--------------
+  @@unique([title, menuId], name: "uniqueField")
+
+}
+
+//================================================================== Modules Translations
+model  modulesTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String              @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            modules?            @relation("MODULE_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?          @relation("MODULES_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Permissions
+model permissions {
+
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Main Fields --------------------------------------
+  actorId             Int
+  invite              Boolean        @default(false)
+  create              Boolean        @default(false)
+  view                Boolean        @default(false)
+  edit                Boolean        @default(false)
+  delete              Boolean        @default(false)
+  approve             Boolean        @default(false)
+
+  //Parents ----------------------------------------------
+  moduleId            Int?
+  module              modules?       @relation("MODULE_PERMISSIONS", fields: [moduleId], references: [id]) 
+  actorTypeId         Int?
+  actorType           actorTypes?    @relation("ACTOR_TYPE_PERMISSIONS", fields: [actorTypeId], references: [id]) 
+
+  //Compound Uinique--------------
+  @@unique([actorTypeId, actorId, moduleId], name: "uniquePermission")
+
+}
+
+//================================================================== Actor Types
+model actorTypes {
+  
+  // Role, User, Company 
+  //Common Fields-----------------
+  id            Int           @default(autoincrement()) @id 
+  isLive        Boolean       @default(true)
+  createdAt     DateTime      @default(now())  @db.Timestamptz(3)
+  updatedAt     DateTime?     @updatedAt       @db.Timestamptz(3)
+  createdBy     Int?
+  updatedBy     Int?
+
+  //Required Fields---------------
+  slug          String        @db.VarChar(255) @unique
+  title         String        @db.VarChar(255) @unique
+  
+  //Childs -----------------------
+  chats         chats[]       @relation("ACTOR_TYPE_CHATS") 
+  permissions   permissions[] @relation("ACTOR_TYPE_PERMISSIONS") 
+
+}
+
+//================================================================== Percentage
+model percentage {
+
+  //Common Fields-----------------
+  id                Int               @default(autoincrement()) @id 
+  isLive            Boolean           @default(true)
+  createdAt         DateTime          @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?         @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  firstName         Int               @default(0)    
+  lastName          Int               @default(0)    
+  email             Int               @default(0)    
+  phone             Int               @default(0)    
+  profileImage      Int               @default(0)    
+  dateOfBirth       Int               @default(0)    
+  birthPlace        Int               @default(0)    
+  address           Int               @default(0)    
+  jobTitle          Int               @default(0)    
+  nationality       Int               @default(0)    
+  academicLevel     Int               @default(0)    
+  industry          Int               @default(0)    
+  currency          Int               @default(0)    
+  aboutMe           Int               @default(0)    
+  education         Int               @default(0)    
+  experience        Int               @default(0)    
+  skills            Int               @default(0)    
+  languages         Int               @default(0)    
+  expertise         Int               @default(0)    
+  portfolio         Int               @default(0)    
+  extraCurriculam   Int               @default(0)    
+  courses           Int               @default(0)    
+  interships        Int               @default(0)    
+  references        Int               @default(0)    
+  hobbies           Int               @default(0)    
+  additionalInfo    Int               @default(0)    
+  publications      Int               @default(0)    
+  awards            Int               @default(0)
+
+}
+
+//================================================================== Uploads
+model uploads {
+
+  //Common Fields-----------------
+  id                  Int               @default(autoincrement()) @id 
+  isLive              Boolean           @default(true)
+  createdAt           DateTime          @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?         @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  name                String            @db.VarChar(99)   
+  extention           String            @db.VarChar(99)  // jpg, png, mp3, pdf, xdocx, mp4, ...
+  type                String            @db.VarChar(99)  // image, sound, document, video, ...
+  path                String            @db.Text         // local path on the server
+  url                 String            @db.Text         // public url address
+
+}
+
+//================================================================== Contact Us
+model contactUs {
+
+  //Common Fields-----------------
+  id                  Int               @default(autoincrement()) @id 
+  isLive              Boolean           @default(true)
+  createdAt           DateTime          @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?         @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+  
+  //Required Fields---------------
+  firstName           String            @db.VarChar(99)   
+  lastName            String            @db.VarChar(99)
+  email               String            @db.VarChar(99) 
+  phone               String            @db.VarChar(99) 
+  message             String            @db.Text 
+  isSeen              DateTime?         @db.Timestamptz(3)       
+  isAanswered         DateTime?         @db.Timestamptz(3)      
+
+  //Parents ----------------------------------------------
+  userId              Int?
+  user                users?            @relation("CONTACT_US_ANSWERED_BY", fields: [userId], references: [id])
+
+}
+
+//================================================================== Roles
+model roles {
+
+  //Test, Admin, Support, Employer, Employee, Candidate
+  //Common Fields ---------------------------------------
+  id                  Int            @id              @default(autoincrement())
+  isLive              Boolean        @default(true)
+  createdAt           DateTime       @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?      @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Main Fields --------------------------------------
+  slug                String?       @db.Text @unique
+  title               String?       @db.Text @unique
+  iconId              String?       @db.Text
+  isDefault           Boolean?      @default(false)
+
+  //Childs ----------------------------------------------
+  users               users[]       @relation("ROLE_USERS")
+  views               roleViews[]   @relation("ROLE_VIEWS")
+  status              roleStatus[]  @relation("ROLE_STATUS")
+  likes               roleLikes[]   @relation("ROLE_LIKES")
+  translations        rolesTs[]     @relation("ROLE_TRANSLATIONS")
+
+}
+
+//================================================================== Role Translations
+model  rolesTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String              @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            roles?              @relation("ROLE_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?          @relation("ROLES_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+
+//================================================================== Role Views
+model roleViews {
+  
+  //Common Fields-----------------
+  id                  Int           @default(autoincrement()) @id
+  isLive              Boolean       @default(true)
+  createdAt           DateTime      @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?     @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Parents ----------------------------------------------
+  roleId              Int?
+  role                roles?        @relation("ROLE_VIEWS", fields: [roleId], references: [id])
+
+}
+
+//================================================================== Role Status
+model roleStatus {
+  
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------         
+  status              String?         //normal, viewed, approved, disabled, suspended    
+
+  //Parents ----------------------------------------------
+  roleId              Int?
+  role                roles?          @relation("ROLE_STATUS", fields: [roleId], references: [id])
+
+}
+
+//================================================================== Role Likes
+model roleLikes {
+  
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------         
+  like                Boolean? 
+
+  //Parents ----------------------------------------------
+  roleId              Int?
+  role                roles?          @relation("ROLE_LIKES", fields: [roleId], references: [id])
+
+}
+
+//================================================================== Users
+model users {
+
+  //Common Fields ---------------------------------------
+  id                        Int             @id              @default(autoincrement())
+  isLive                    Boolean         @default(true)
+  createdAt                 DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt                 DateTime?       @updatedAt       @db.Timestamptz(3)
+  identifier                String          @default(cuid()) @unique
+  updatedBy                 Int?
+  isActive                  Boolean?        @default(true)
+  
+  //Main Fields -----------------------------------------
+  // invitationCode            String?         @db.Text
+  provider                  String
+  providerId                String?
+  givenName                 String?         // First Name
+  familyName                String?         // Last Name
+  email                     String?         @unique
+  dateOfBirth               DateTime?       @db.Date()
+  phone                     String?
+  jobTitle                  String?
+  website                   String?
+  minSalary                 String?
+  maxSalary                 String?
+  password                  String?         @db.Text
+  secret                    Json?
+  answer1                   String?         @db.Text
+  answer2                   String?         @db.Text
+  answer3                   String?         @db.Text
+  avatar                    String?         @db.Text  // Avatar URL
+  avatarId                  String?         @db.Text
+  bannerId                  String?         @db.Text
+  description               String?         @db.Text
+  zipCode                   String?
+  fullAddress               String?         @db.Text  // from geo coders
+  streetAddress             String?         @db.Text  // destructed from geo coders
+  location                  String?         @db.Text
+  latitude                  Float?          @default(0)
+  longitude                 Float?          @default(0)
+  isVerified                Boolean         @default(false)
+  isPhoneVerified           Boolean         @default(false)
+  isAcceptedTerms           Boolean         @default(false)
+  isRememberMe              Boolean         @default(false)
+  is2FA                     Boolean         @default(false)
+  isSidebarMinimized        Boolean         @default(false)
+  hobbies                   String?         @db.Text
+  additionalInfo            String?         @db.Text
+  publications              String?         @db.Text
+  testimonial               String?         @db.Text         
+  loginMethod               String?
+  about                     String?         @db.Text
+  otp                       String?
+  otpCreatedAt              String?
+  showOnTestimonials        Boolean         @default(false) //For users who are member of the support team, have support role
+  
+  //Notification Settings -------------------------------
+
+  jobOffersInDash           Boolean?              @default(false)
+  jobOffersInEmail          Boolean?              @default(false)
+
+  applyJobInDash            Boolean?              @default(false)
+  applyJobInEmail           Boolean?              @default(false)
+
+  projectInvitationInDash   Boolean?              @default(false)
+  projectInvitationInEmail  Boolean?              @default(false)
+
+  appliedJobsStatusInDash   Boolean?              @default(false)
+  appliedJobsStatusInEmail  Boolean?              @default(false)
+
+  fieldOfStudyAdsInDash     Boolean?              @default(false)
+  fieldOfStudyAdsInEmail    Boolean?              @default(false)
+
+  resumeViewInDash          Boolean?              @default(false)
+  resumeViewInEmail         Boolean?              @default(false)
+
+  passwordChangeInDash      Boolean?              @default(false)
+  passwordChangeInEmail     Boolean?              @default(false)
+
+  newConnectionInDash       Boolean?              @default(false)
+  newConnectionInEmail      Boolean?              @default(false)
+
+  blogContentInDash         Boolean?              @default(false)
+  blogContentInEmail        Boolean?              @default(false)
+
+  courseSuggestionsInDash   Boolean?              @default(false)
+  courseSuggestionsInEmail  Boolean?              @default(false)
+
+  discountsInDash           Boolean?              @default(false)
+  discountsInEmail          Boolean?              @default(false)
+
+
+  //Privacy ----------------------------------------------
+  showResumeToEmployers     Boolean?              @default(true)
+  isProfilePublic           Boolean?              @default(true)
+  yourSessions              Boolean?              @default(true)
+  defaultGridView           Boolean?              @default(true)
+  resultsPerPage            Int?                  @default(10)
+  
+  //Parents ----------------------------------------------
+  genderId                  Int?
+  gender                    genders?               @relation("GENDER_USERS", fields: [genderId], references: [id])
+  themeId                   Int?
+  theme                     themes?                @relation("THEME_USERS", fields: [themeId], references: [id])
+  roleId                    Int?
+  role                      roles?                 @relation("ROLE_USERS", fields: [roleId], references: [id])
+
+  birthCountryId            Int?                   
+  birthCountry              countries?             @relation("COUNTRY_BIRTHED_USERS", fields: [birthCountryId], references: [id])
+  birthStateId              Int?
+  birthState                states?                @relation("STATE_BIRTHED_USERS", fields: [birthStateId], references: [id])
+  birthCityId               Int?
+  birthCity                 cities?                @relation("CITY_BIRTHED_USERS", fields: [birthCityId], references: [id])
+  
+  residentCountryId         Int?                   
+  residentCountry           countries?             @relation("COUNTRY_RESIDENT_USERS", fields: [residentCountryId], references: [id])
+  residentStateId           Int?
+  residentState             states?                @relation("STATE_RESIDENT_USERS", fields: [residentStateId], references: [id])
+  residentCityId            Int?
+  residentCity              cities?                @relation("CITY_RESIDENT_USERS", fields: [residentCityId], references: [id])
+  
+  nationalityId             Int?
+  nationality               nationalities?         @relation("COUNTRY_CITIZEN_USERS", fields: [nationalityId], references: [id])
+  currencyId                Int?
+  currency                  currencies?            @relation("CURRENCY_USERS", fields: [currencyId], references: [id])
+  languageId                Int?
+  language                  languages?             @relation("LANGUAGE_USERS", fields: [languageId], references: [id])
+  timezoneId                Int?
+  timezone                  timezones?             @relation("TIMEZONE_USERS", fields: [timezoneId], references: [id])
+  industryId                Int?
+  industry                  industries?            @relation("INDUSTRY_USERS", fields: [industryId], references: [id])
+  degreeId                  Int?
+  degree                    academicLevels?        @relation("DEGREE_USERS", fields: [degreeId], references: [id])
+  drivingLicenseId          Int?
+  drivingLicense            drivingLicenses?       @relation("DRIVING_LICENSE_USERS", fields: [drivingLicenseId], references: [id])
+  question1Id               Int?
+  question1                 securityQuestions?     @relation("QUESTION1_USERS", fields: [question1Id], references: [id])
+  question2Id               Int?
+  question2                 securityQuestions?     @relation("QUESTION2_USERS", fields: [question2Id], references: [id])
+  question3Id               Int?
+  question3                 securityQuestions?     @relation("QUESTION3_USERS", fields: [question3Id], references: [id])
+  salaryPeriodId          Int?
+  salaryPeriod            salaryPeriods?       @relation("SALARY_PERIOD_USERS", fields: [salaryPeriodId], references: [id])
+
+  //Childs -----------------------
+  userStatus                userStatus[]           @relation("USER_STATUS")
+  userViews                 userViews[]            @relation("USER_VIEWS")
+  userLikes                 userLikes[]            @relation("USER_LIKES")
+  userFollowers             userFollowers[]        @relation("USER_FOLLOWERS")
+  userAnsweres              contactUs[]            @relation("CONTACT_US_ANSWERED_BY")
+  userCompanies             userCompanies[]        @relation("USER_COMPANIES") 
+  userEducations            userEducations[]       @relation("USER_EDUCATIONS")
+  userSocials               userSocials[]          @relation("USER_SOCIALS") 
+  userExperiences           userExperiences[]      @relation("USER_EXPERIENCES") 
+  userSkils                 userSkills[]           @relation("USER_SKILLS") 
+  userLanguages             userLanguages[]        @relation("USER_LANGUAGES") 
+  userExpertises            userExpertises[]       @relation("USER_EXPERTISES") 
+  userPortfolios            userPortfolios[]       @relation("USER_PORTFOLIOS") 
+  userExtraActivities       userExtraActivities[]  @relation("USER_EXTRA_ACTIVITIES") 
+  userCourses               userCourses[]          @relation("USER_COURSES") 
+  userInterships            userInterships[]       @relation("USER_INTERSHIPS") 
+  userReferences            userReferences[]       @relation("USER_REFERENCES") 
+  userAwards                userAwards[]           @relation("USER_AWARDS") 
+  userMemberships           companyMembers[]       @relation("USER_COMPANY_MEMBERSHIP")
+  userInvitaions            invitations[]          @relation("USER_INVITAIONS")
+
+  //OPERATIONS -----------------------
+  chats                     chats[]                @relation("USER_CHATS")
+  userApplications          applications[]         @relation("USER_APPLICATIONS")
+}
+
+//================================================================== User Status
+model userStatus {
+  
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------         
+  status              String?         //normal, viewed, approved, disabled, suspended    
+
+  //Parents ----------------------------------------------
+  userId              Int?
+  user                users?          @relation("USER_STATUS", fields: [userId], references: [id])
+
+}
+
+//================================================================== User Views
+model userViews {
+  
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Parents ----------------------------------------------
+  userId              Int?
+  user                users?           @relation("USER_VIEWS", fields: [userId], references: [id])
+
+}
+
+//================================================================== User Likes
+model userLikes {
+  
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------         
+  like                Boolean? 
+
+  //Parents ----------------------------------------------
+  userId              Int?
+  user                users?          @relation("USER_LIKES", fields: [userId], references: [id])
+
+}
+
+//================================================================== User Followers
+model userFollowers {
+  
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Parents ----------------------------------------------
+  userId              Int?
+  user                users?           @relation("USER_FOLLOWERS", fields: [userId], references: [id])
+
+}
+
+//================================================================== User Educations
+model userEducations {
+
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------         
+  fromDate            DateTime?       @db.Date()
+  toDate              DateTime?       @db.Date()         
+  present             Boolean?        @default(false)
+  institute           String?         @db.Text
+  major               String?      
+
+  //Parents ----------------------------------------------
+  userId              Int?
+  user                users?           @relation("USER_EDUCATIONS", fields: [userId], references: [id])
+  degreeId            Int?
+  degree              academicLevels?  @relation("ACADEMIC_LEVEL_USER_EDUCATIONS", fields: [degreeId], references: [id])
+
+  countryId           Int?                   
+  country             countries?       @relation("COUNTRY_EDUCATED_USERS", fields: [countryId], references: [id])
+  stateId             Int?
+  state               states?          @relation("STATE_EDUCATED_USERS", fields: [stateId], references: [id])
+  cityId              Int?
+  city                cities?          @relation("CITY_EDUCATED_USERS", fields: [cityId], references: [id])
+  
+  //Compound Uinique--------------
+  @@unique([degreeId, userId], name: "uniqueUserEducation")
+
+}
+
+//================================================================== User Social Medias
+model userSocials {
+
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------------------------------
+  username            String
+
+  //Parents ----------------------------------------------
+  userId              Int
+  user                users           @relation("USER_SOCIALS", fields: [userId], references: [id])
+  socialId            Int 
+  social              socials         @relation("SOCIAL_USERS", fields: [socialId], references: [id])
+
+  //Compound Uinique--------------
+  @@unique([userId, socialId], name: "uniqueUserSocial")
+
+}
+
+//================================================================== User Experiences
+model userExperiences {
+
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  title               String          
+  fromDate            DateTime?       @db.Date()
+  toDate              DateTime?       @db.Date()           
+  present             Boolean? 
+  institute           String?         @db.Text
+  description         String?         @db.Text
+
+  //Parents ----------------------------------------------
+  userId              Int?
+  user                users?            @relation("USER_EXPERIENCES", fields: [userId], references: [id]) 
+  employmentTypeId    Int?
+  employmentType      employmentTypes?  @relation("USER_EXPERIENCES_EMPLOYMENT_TYPES", fields: [employmentTypeId], references: [id]) 
+
+  countryId           Int?                   
+  country             countries?       @relation("COUNTRY_EXPERIENCED_USERS", fields: [countryId], references: [id])
+  stateId             Int?
+  state               states?          @relation("STATE_EXPERIENCED_USERS", fields: [stateId], references: [id])
+  cityId              Int?
+  city                cities?          @relation("CITY_EXPERIENCED_USERS", fields: [cityId], references: [id])
+}
+
+//================================================================== User Skills
+model userSkills {
+
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  title               String
+  percentage          Int?
+
+  //Parents ----------------------------------------------
+  userId              Int?
+  user                users?             @relation("USER_SKILLS", fields: [userId], references: [id]) 
+  dominationId        Int?
+  domination          dominationLevels?  @relation("DOMINATION_USER_SKILLS", fields: [dominationId], references: [id]) 
+
+  //Compound Uinique--------------
+  @@unique([title, userId], name: "uniqueUserSkill")
+
+}
+
+//================================================================== User Languages
+model userLanguages {
+
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  percentage          Int?
+
+  //Parents ----------------------------------------------
+  userId              Int?
+  user                users?                 @relation("USER_LANGUAGES", fields: [userId], references: [id]) 
+  languageId          Int?
+  language            languages?             @relation("LANGUAGE_USERS_LANGUAGES", fields: [languageId], references: [id]) 
+  certificateId       Int?
+  certificate         languageCertificates?  @relation("CERTIFICATE_USER_LANGUAGES", fields: [certificateId], references: [id]) 
+  levelId             Int?
+  level               languageLevels?        @relation("LANG_LEVEL_USER_LANGUAGES", fields: [levelId], references: [id]) 
+
+  //Compound Uinique--------------
+  @@unique([userId, languageId], name: "uniqueUserLanguage")
+
+}
+
+//================================================================== User Expertises
+model userExpertises {
+
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  title               String
+  percentage          Int?
+
+  //Parents ----------------------------------------------
+  userId              Int?
+  user                users?             @relation("USER_EXPERTISES", fields: [userId], references: [id]) 
+  dominationId        Int?
+  domination          dominationLevels?  @relation("DOMINATION_USER_EXPERTISES", fields: [dominationId], references: [id]) 
+
+  //Compound Uinique--------------
+  @@unique([title, userId], name: "uniqueUserExpertise")
+
+}
+
+//================================================================== User Portfolios
+model userPortfolios {
+
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  title               String
+  link                String?         @db.Text
+  videoLink           String?         @db.Text
+  imageIds            String[]
+
+  //Parents ----------------------------------------------
+  userId              Int?
+  user                users?          @relation("USER_PORTFOLIOS", fields: [userId], references: [id]) 
+
+  //Compound Uinique--------------
+  @@unique([title, userId], name: "uniqueUserPortfolio")
+
+}
+
+//================================================================== User Extra Curricular Activities
+model userExtraActivities {
+
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  title               String      
+  fromDate            DateTime?       @db.Date()   
+  toDate              DateTime?       @db.Date()            
+  present             Boolean?      
+  institute           String?         @db.Text
+  description         String?         @db.Text
+
+  //Parents ----------------------------------------------
+  userId              Int?
+  user                users?          @relation("USER_EXTRA_ACTIVITIES", fields: [userId], references: [id]) 
+
+  countryId           Int?                   
+  country             countries?       @relation("COUNTRY_ACTIVITY_USERS", fields: [countryId], references: [id])
+  stateId             Int?
+  state               states?          @relation("STATE_ACTIVITY_USERS", fields: [stateId], references: [id])
+  cityId              Int?
+  city                cities?          @relation("CITY_ACTIVITY_USERS", fields: [cityId], references: [id])
+  
+  //Compound Uinique--------------
+  @@unique([title, userId], name: "uniqueUserExtraActivity")
+
+}
+
+//================================================================== User Interships
+model userInterships {
+
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  title               String          
+  fromDate            DateTime?       @db.Date()  
+  toDate              DateTime?       @db.Date()           
+  present             Boolean? 
+  employer            String?         @db.Text    
+
+  //Parents ----------------------------------------------
+  userId              Int?
+  user                users?          @relation("USER_INTERSHIPS", fields: [userId], references: [id])
+
+  countryId           Int?                   
+  country             countries?       @relation("COUNTRY_INTERSHIP_USERS", fields: [countryId], references: [id])
+  stateId             Int?
+  state               states?          @relation("STATE_INTERSHIP_USERS", fields: [stateId], references: [id])
+  cityId              Int?
+  city                cities?          @relation("CITY_INTERSHIP_USERS", fields: [cityId], references: [id])
+  
+  //Compound Uinique--------------
+  @@unique([title, userId], name: "uniqueUserIntership")
+
+}
+
+//================================================================== User References
+model userReferences {
+
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  fullName            String          
+  company             String?        
+  phone               String?         
+  email               String?         @db.Text         
+
+  //Parents ----------------------------------------------
+  userId              Int?
+  user                users?          @relation("USER_REFERENCES", fields: [userId], references: [id])
+
+  //Compound Uinique--------------
+  @@unique([fullName, userId], name: "uniqueUserReference")
+
+}
+
+//================================================================== User Awards and Honors
+model userAwards {
+
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  title               String          
+  date                DateTime?       @db.Date()        
+  description         String?         @db.Text
+
+  //Parents ----------------------------------------------
+  userId              Int?
+  user                users?          @relation("USER_AWARDS", fields: [userId], references: [id])
+
+  //Compound Uinique--------------
+  @@unique([title, userId], name: "uniqueUserReference")
+
+}
+
+//================================================================== User Courses
+model userCourses {
+
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  title               String      
+  fromDate            DateTime?       @db.Date()  
+  toDate              DateTime?       @db.Date()           
+  present             Boolean?      
+  institute           String?         @db.Text
+
+  //Parents ----------------------------------------------
+  userId              Int?
+  user                users?          @relation("USER_COURSES", fields: [userId], references: [id]) 
+
+  //Compound Uinique--------------
+  @@unique([title, userId], name: "uniqueUserCourse")
+
+}
+
+//================================================================== User Companies
+model userCompanies {
+
+  //Common Fields ---------------------------------------
+  id                  Int             @id              @default(autoincrement())
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  identifier          String          @default(cuid()) @unique
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Main Fields -----------------------------------------
+  name                String
+  phone               String?
+  email               String?
+  address             String?         @db.Text
+  taxId               String?
+  website             String?
+  companySize         Int?            // Company Size
+  specialities        String[]
+  about               String?         @db.Text
+  logoId              String?         @db.Text
+  bannerId            String?         @db.Text
+  
+  isVerified          Boolean         @default(false)
+  isPrivate           Boolean         @default(false)
+  isDisabled          Boolean         @default(false)
+
+  //Parents ----------------------------------------------
+  userId              Int?
+  user                users?          @relation("USER_COMPANIES", fields: [userId], references: [id])
+  industryId          Int?
+  industry            industries?     @relation("INDUSTRY_COMPANIES", fields: [industryId], references: [id])
+  countryId           Int?
+  country             countries?      @relation("COUNTRY_COMPANIES", fields: [countryId], references: [id])
+
+  //Childs -----------------------
+  projects            companyProjects[]  @relation("COMPANY_PROJECTS") 
+  members             companyMembers[]   @relation("COMPANY_MEMBERS") 
+  jobs                companyJobs[]      @relation("COMPANY_JOBS")
+  socials             companySocials[]   @relation("COMPANY_SOCIALS")
+
+  //OPERATIONS -----------------------
+  chats                chats[]           @relation("COMPANY_CHATS")
+
+  //Compound Uinique--------------
+  @@unique([name, userId], name: "uniqueCompany")
+
+}
+
+//================================================================== Company Projects
+model companyProjects {
+
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  name               String
+
+  //Parents ----------------------------------------------
+  companyId           Int?
+  company             userCompanies? @relation("COMPANY_PROJECTS", fields: [companyId], references: [id]) 
+
+  //Childs -----------------------
+  members             companyMembers[]   @relation("PROJECT_MEMBERS") 
+
+  //Compound Uinique--------------
+  @@unique([name, companyId], name: "uniqueProject")
+
+}
+
+//================================================================== Company Members
+model companyMembers {
+
+  //Common Fields-----------------
+  id                   Int            @default(autoincrement()) @id
+  isLive               Boolean        @default(true)
+  createdAt            DateTime       @default(now())  @db.Timestamptz(3)
+  updatedAt            DateTime?      @updatedAt       @db.Timestamptz(3)
+  createdBy            Int?
+  updatedBy            Int?
+
+  //Required Fields---------------
+  rate                 Int            @default(0)         
+  overtime             Int            @default(0) 
+  overTimeEntitled     Boolean        @default(false)        
+  weekend              Int            @default(0) 
+  weekendEntitled      Boolean        @default(false)        
+  bankHolidays         Int            @default(0) 
+  bankHolidaysEntitled Boolean        @default(false)
+  startDate            DateTime?      @db.Date()
+  endDate              DateTime?      @db.Date()
+  isIndefinedEndDate   Boolean        @default(false)
+  startHour            Int?
+  endHour              Int?
+  location             String?        @db.Text
+  workingDaysIds       Int[]
+
+  //Parents ----------------------------------------------
+  companyId               Int
+  company                 userCompanies    @relation("COMPANY_MEMBERS", fields: [companyId], references: [id])
+  projectId               Int?
+  project                 companyProjects? @relation("PROJECT_MEMBERS", fields: [projectId], references: [id])
+  userId                  Int?
+  user                    users?            @relation("USER_COMPANY_MEMBERSHIP", fields: [userId], references: [id]) 
+  rateConditionId         Int?
+  rateCondition           timePeriods?     @relation("RATE_CONDITIONS", fields: [rateConditionId], references: [id]) 
+  overTimeConditionId     Int?
+  overTimeCondition       timePeriods?     @relation("OVERTIME_CONDITIONS", fields: [overTimeConditionId], references: [id]) 
+  weekendConditionId      Int?
+  weekendCondition        timePeriods?     @relation("WEEKEND_CONDITIONS", fields: [weekendConditionId], references: [id]) 
+  bankHolidaysConditionId Int?
+  bankHolidaysCondition   timePeriods?     @relation("BANKHOLIDAYS_CONDITIONS", fields: [bankHolidaysConditionId], references: [id]) 
+  employmentTypeId        Int?
+  employmentType          employmentTypes? @relation("EMPLOYMENT_TYPE_MEMBERS", fields: [employmentTypeId], references: [id]) 
+
+  //Childs -----------------------
+  clockings               memberClockings[] @relation("MEMBER_CLOCKINGS") 
+
+  //Compound Uinique--------------
+  @@unique([userId, companyId, projectId], name: "uniqueMembership")
+
+}
+
+//================================================================== Member Clockings
+model memberClockings {
+
+  //Common Fields-----------------
+  id                   Int            @default(autoincrement()) @id
+  isLive               Boolean        @default(true)
+  createdAt            DateTime       @default(now())  @db.Timestamptz(3)
+  updatedAt            DateTime?      @updatedAt       @db.Timestamptz(3)
+  createdBy            Int?
+  updatedBy            Int?
+
+  //Required Fields---------------
+  startDate            DateTime?      @db.Date()
+  endDate              DateTime?      @db.Date()
+  startHour            Int?
+  endHour              Int?
+
+  //Parents ----------------------------------------------
+  memberId             Int
+  member               companyMembers @relation("MEMBER_CLOCKINGS", fields: [memberId], references: [id])
+  
+  //Compound Uinique--------------
+  @@unique([memberId, startDate, startHour], name: "uniqueStart")
+  @@unique([memberId, endDate, endHour], name: "uniqueEnd")
+
+}
+
+//================================================================== Company Social Medias
+model companySocials {
+
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------------------------------
+  username            String
+
+  //Parents ----------------------------------------------
+  companyId           Int
+  company             userCompanies  @relation("COMPANY_SOCIALS", fields: [companyId], references: [id])
+  socialId            Int 
+  social              socials         @relation("SOCIAL_COMPANIES", fields: [socialId], references: [id])
+
+  //Compound Uinique--------------
+  @@unique([companyId, socialId], name: "uniqueCompanySocial")
+
+}
+
+//================================================================== Company Jobs
+model companyJobs {
+
+  //Common Fields ---------------------------------------
+  id                   Int           @id              @default(autoincrement())
+  isLive               Boolean       @default(true)
+  createdAt            DateTime      @default(now())  @db.Timestamptz(3)
+  updatedAt            DateTime?     @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Main Fields -----------------------------------------
+  jobId                String        @db.VarChar(100)
+  title                String        @db.VarChar(255)
+  slug                 String?       @db.Text @unique
+  zipCode              String?
+  streetAddress        String?       @db.Text  // from geo coders
+  location             String?       @db.Text
+  latitude             Float?        @default(0)
+  longitude            Float?        @default(0)
+  requiredSkillsIds    Int[]         //IDs of required skills 
+  minSalary            Int?          @default(0)
+  maxSalary            Int?          @default(0)
+  description          Json?
+  responsibilities     String?       @db.Text
+  expirationDate       DateTime?     @db.Timestamptz(3)
+  jobBannerId          Int?         
+  viewsCounter         Int?          @default(0)
+  searchCounter        Int?          @default(0)
+  isFeatured           Boolean       @default(false)
+  isPrivate            Boolean       @default(false)
+  isClosed             Boolean       @default(false)
+  isPublished          Boolean       @default(false)
+  startImmediately     Boolean       @default(false)
+  mhStartImmediately   Boolean       @default(false)
+  mhAcademicLevel      Boolean       @default(false)
+  minWorkExperience    Int?          @default(0)
+  mhMinWorkExp         Boolean       @default(false)
+  minIndustryExp       Int?          @default(0)
+  mhMinIndustryExp     Boolean       @default(false)
+  mhMinLanguageLevel   Boolean       @default(false)
+  minJobFunctionExp    Int?          @default(0)
+  mhMinJobFunctionExp  Boolean       @default(false)
+  driverLicense        Boolean?      @default(false)
+  mhDriverLicense      Boolean       @default(false)
+
+  // deadlineDate         DateTime?     @db.Timestamptz(3)
+  // jobCount             Int?          @default(1)
+  // offers               String?       @db.Text
+  // isFeatured           Boolean?      @default(false)
+  // isUrgent             Boolean?      @default(false)
+  // isRemoteJob          Boolean?      @default(false)
+  // industries           Int[]
+
+  //Parents ----------------------------------------------
+  companyId            Int
+  company              userCompanies    @relation("COMPANY_JOBS", fields: [companyId], references: [id])
+  academicLevelId      Int?
+  academicLevel        academicLevels?  @relation("ACADEMIC_LEVEL_JOBS", fields: [academicLevelId], references: [id])
+  languageId           Int?
+  language             languages?        @relation("LANGUAGE_JOBS", fields: [languageId], references: [id])
+  employmentTypeId     Int?
+  employmentType       employmentTypes? @relation("EMPLOYMENT_TYPE_JOBS", fields: [employmentTypeId], references: [id])
+  salaryTypeId         Int?
+  salaryType           timePeriods?     @relation("SALARY_TYPE_JOBS", fields: [salaryTypeId], references: [id])
+  timezoneId           Int?
+  timezone             timezones?        @relation("TIMEZONE_JOBS", fields: [timezoneId], references: [id])
+  statusId             Int?
+  status               jobStatus?       @relation("STATUS_JOBS", fields: [statusId], references: [id])
+  industryId           Int?
+  industry             industries?       @relation("INDUSTRY_JOBS", fields: [industryId], references: [id])
+  currencyId           Int?
+  currency             currencies?       @relation("CURRENCY_JOBS", fields: [currencyId], references: [id])
+  drivingLicenseId     Int?
+  drivingLicense       drivingLicenses? @relation("DRIVING_LICENSE_JOBS", fields: [drivingLicenseId], references: [id])
+
+  //Childs -----------------------
+  skills               jobSkills[]      @relation("JOB_SKILLS") 
+  jobQuestions         jobQuestions[]   @relation("JOB_QUESTIONS")
+  // favorites         userFavorites[]  @relation("JOB_FAVORITED_BY_USERS")
+
+  applications         applications[]    @relation("JOB_APPLICATIONS")
+}
+
+//================================================================== Job Skills
+model jobSkills {
+
+  //Common Fields-----------------
+  id                   Int            @default(autoincrement()) @id
+  isLive               Boolean        @default(true)
+  createdAt            DateTime       @default(now())  @db.Timestamptz(3)
+  updatedAt            DateTime?      @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Parents ----------------------------------------------
+  jobId               Int?
+  job                 companyJobs?   @relation("JOB_SKILLS", fields: [jobId], references: [id]) 
+  skillId             Int?
+  skill               skills?         @relation("SKILL_JOBS", fields: [skillId], references: [id]) 
+
+  //Compound Uinique--------------
+  @@unique([jobId, skillId], name: "uniqueJobSkill")
+
+}
+
+//================================================================== Job Questions
+model jobQuestions {
+
+  //Common Fields-----------------
+  id                   Int            @default(autoincrement()) @id
+  isLive               Boolean        @default(true)
+  createdAt            DateTime       @default(now())  @db.Timestamptz(3)
+  updatedAt            DateTime?      @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  title                String?        @db.VarChar(100)     
+
+  //Parents ----------------------------------------------
+  jobId               Int
+  job                 companyJobs    @relation("JOB_QUESTIONS", fields: [jobId], references: [id])
+  categoryId          Int
+  category            jobQuestionsCategories @relation("CATEGORY_QUESTIONS", fields: [categoryId], references: [id])
+
+  //Compound Uinique--------------
+  // @@unique([title, jobId, category], name: "uniqueJobQuestion")
+
+}
+
+//================================================================== User  Job Applications
+model applications {
+
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  employerMessage     String?         @db.Text
+  attachmentsIds      Int[]
+  isBookmarked        Boolean?
+  isMatched           Boolean?
+
+  //Parents ----------------------------------------------
+  userId              Int?
+  user                users?          @relation("USER_APPLICATIONS", fields: [userId], references: [id]) 
+  jobId               Int?
+  job                 companyJobs?   @relation("JOB_APPLICATIONS", fields: [jobId], references: [id]) 
+  applicationResultId Int?
+  applicationResult   applicationResults? @relation("APPLICATION_RESULT_JOBS", fields: [applicationResultId], references: [id])
+
+  //Compound Uinique--------------
+  @@unique([userId, jobId], name: "uniqueUserApplication")
+
+}
+
+//================================================================== Chats
+model chats {
+
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  message             String         @db.Text
+  imagesIds           String[]
+  filesIds            Int[]            
+  isDelivered         DateTime?      @db.Timestamptz(3)
+  isSeen              DateTime?      @db.Timestamptz(3) 
+
+  //Parents ----------------------------------------------
+  actorId             Int?
+  actor               actorTypes?    @relation("ACTOR_TYPE_CHATS", fields: [actorId], references: [id]) 
+  userId              Int?
+  user                users?          @relation("USER_CHATS", fields: [userId], references: [id]) 
+  companyId           Int?
+  company             userCompanies? @relation("COMPANY_CHATS", fields: [companyId], references: [id])
+  parentId            Int?
+  parent              chats?          @relation("SELF_CHATS", fields: [parentId], references: [id])
+
+  //Childs -----------------------
+  childs              chats[]         @relation("SELF_CHATS")
+
+}
+
+
+//================================================================== User Notifications from Admins
+model notifications {
+
+  //Common Fields-----------------
+  id                  Int             @default(autoincrement()) @id
+  isLive              Boolean         @default(true)
+  createdAt           DateTime        @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?       @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+
+  //Required Fields---------------
+  title               String         
+  content             String          @db.Text 
+  type                NOTIFICATIONS      
+  imageId             String?         @db.Text
+  isSeen              DateTime?       @db.Timestamptz(3)
+  sendToAll           Boolean         @default(false)
+  isArchived          Boolean         @default(false)
+  userIds             Int[]
+  roleIds             Int[]
+
+}
+
+//================================================================== News Letter Subscribers
+model newsLetterSubscribers {
+
+  //Common Fields-----------------
+  id                  Int               @default(autoincrement()) @id 
+  isLive              Boolean           @default(true)
+  createdAt           DateTime          @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?         @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+  
+  //Required Fields---------------
+  email               String            @db.VarChar(99)     
+
+} 
+
+//================================================================== News Letters
+model newsLetters {
+
+  //Common Fields-----------------
+  id                  Int               @default(autoincrement()) @id 
+  isLive              Boolean           @default(true)
+  createdAt           DateTime          @default(now())  @db.Timestamptz(3)
+  updatedAt           DateTime?         @updatedAt       @db.Timestamptz(3)
+  createdBy           Int?
+  updatedBy           Int?
+  
+  //Required Fields---------------
+  content             String            @db.VarChar(99) 
+  bannerId            String?           @db.Text    
+
+} 
+
+//================================================================== Invitations
+model  invitations {
+  //Common Fields-----------------
+  id            Int        @default(autoincrement()) @id 
+  isLive        Boolean    @default(true)
+  createdAt     DateTime   @default(now())  @db.Timestamptz(3)
+  updatedAt     DateTime?  @updatedAt       @db.Timestamptz(3)
+  createdBy     Int?
+  updatedBy     Int?
+
+  //Required Fields---------------
+  guest         String?    @db.Text    
+
+  //Parents ----------------------------------------------
+  userId       Int?
+  user         users?      @relation("USER_INVITAIONS", fields: [userId], references: [id]) 
+}
+
+//================================================================== SalaryPeriods
+model salaryPeriods {
+
+  //Common Fields-----------------
+  id                Int               @default(autoincrement()) @id 
+  isLive            Boolean           @default(true)
+  createdAt         DateTime          @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?         @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  slug              String?           @db.VarChar(255) @unique
+  title             String?           @db.VarChar(255) @unique
+
+  //Childs -----------------------
+  users             users[]             @relation("SALARY_PERIOD_USERS") 
+  translations      salaryPeriodsTs[]       @relation("SALARY_PERIOD_TRANSLATIONS")
+
+}
+
+//================================================================== SalaryPeriods Translations
+model  salaryPeriodsTs {
+
+  //Common Fields-----------------
+  id                Int                @default(autoincrement()) @id 
+  isLive            Boolean            @default(true)
+  createdAt         DateTime           @default(now())  @db.Timestamptz(3)
+  updatedAt         DateTime?          @updatedAt       @db.Timestamptz(3)
+  createdBy         Int?
+  updatedBy         Int?
+
+  //Required Fields---------------
+  title             String             @db.VarChar(255)
+
+  //Parents ----------------------------------------------
+  recordId          Int?
+  record            salaryPeriods?           @relation("SALARY_PERIOD_TRANSLATIONS", fields: [recordId], references: [id])
+  languageId        Int?
+  language          languages?         @relation("SALARY_PERIODS_TRANSLATIONS", fields: [languageId], references: [id])
+
+}
+

@@ -1,0 +1,492 @@
+@import "../theme/index";
+
+.light-mode {
+  background-color: $light-background;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $light-border-col;
+  }
+  //***************************
+  // Start Swiper
+  //***************************
+  .swiper {
+    height: 640px;
+    .swiper-pagination-bullet-active {
+      width: 24px;
+      height: 10px !important;
+      border-radius: 0;
+      background-color: $focused !important;
+    }
+    .swiper-pagination-bullet {
+      width: 24px;
+      height: 10px !important;
+      background-color: $light-border-col;
+      transform: inherit !important;
+      border-radius: 0 !important;
+    }
+    .swiper-pagination-bullet:last-child {
+      width: 10px !important;
+      height: 10px !important;
+    }
+  }
+  //***************************
+  // End Swiper
+  //***************************
+
+  //***************************
+  // Start Back To Top
+  //***************************
+
+  .ant-back-top {
+    left: 33px;
+  }
+
+  //***************************
+  // End Back To Top
+  //***************************
+
+  //***************************
+  // Start Menu Drawer
+  //***************************
+  .menu-drawer {
+    .ant-drawer-body {
+      padding: 0;
+    }
+  }
+
+  //***************************
+  // End Menu Drawer
+  //***************************
+
+  //***************************
+  // Start Drawer
+  //***************************
+  .ant-drawer {
+    .ant-drawer-content {
+      background-color: $light-background;
+    }
+  }
+  //***************************
+  // End Drawer
+  //***************************
+
+  //***************************
+  // Start Phone
+  //***************************
+  .react-tel-input {
+    z-index: 99 !important;
+    .flag-dropdown {
+      .open {
+        .arrow {
+          background-image: url("/svgs/arrow-up-icon.svg");
+          width: 20px;
+          height: 20px;
+          background-position: center;
+          position: absolute;
+          transform: translateY(-50%);
+          background-repeat: no-repeat;
+          right: 5px;
+          border: 0;
+        }
+      }
+    }
+  }
+  .react-tel-input .flag-dropdown {
+    background-color: $light-background2;
+    border: 0;
+    border-radius: 8px !important;
+    height: 90%;
+    top: 2px;
+    left: 2px;
+    .highlight {
+      background-color: $focused !important;
+    }
+  }
+  .react-tel-input .form-control {
+    width: 100%;
+    height: 45px;
+    background-color: $light-background2;
+    border: 0;
+    border-radius: 8px;
+    padding-left: 60px;
+    color: $light-body;
+    @extend .body;
+    &::placeholder {
+      color: $light-body;
+    }
+    &:focus {
+      border: 2px solid $focused !important;
+      box-shadow: 0 0 0;
+    }
+  }
+  .react-tel-input .selected-flag {
+    border-radius: 8px;
+  }
+  .react-tel-input .flag-dropdown.open .selected-flag {
+    border-radius: 8px;
+  }
+  .react-tel-input .selected-flag:hover,
+  .react-tel-input .selected-flag:focus {
+    background-color: $light-background2;
+  }
+  .react-tel-input .flag-dropdown.open .selected-flag {
+    background-color: $light-background2;
+  }
+  .react-tel-input .country-list {
+    border-radius: 8px !important;
+    padding-bottom: 10px;
+    border: 1px solid $light-border;
+    background-color: $light-background;
+    text-align: center;
+    box-shadow: 0 0 0 !important;
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: $light-background2;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: $light-border-col;
+    }
+  }
+  .react-tel-input .country-list .country:hover {
+    background-color: $light-background2;
+  }
+
+  .react-tel-input .selected-flag .arrow {
+    background-image: url("/svgs/arrow-down-icon.svg");
+    width: 20px;
+    height: 20px;
+    background-position: center;
+    position: absolute;
+    transform: translateY(-50%);
+    background-repeat: no-repeat;
+    right: 5px;
+    border: 0;
+  }
+  .react-tel-input .selected-flag .arrow.up {
+    border: 0;
+  }
+  .react-tel-input .country-list .country.highlight {
+    background-color: inherit;
+  }
+  //***************************
+  // End Phone
+  //***************************
+
+  // Start Collapse Faq
+  .collapse-faq {
+    border: 0;
+    background-color: transparent;
+    .ant-collapse-header {
+      background-color: $light-background;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      padding-left: 26px;
+      padding-right: 80px;
+      overflow: hidden;
+    }
+    .ant-collapse-item {
+      @extend .bold-body;
+      border-bottom: 0;
+      .ant-collapse-header {
+        border-radius: 24px;
+      }
+    }
+    .ant-collapse-content {
+      border-top: 0;
+      border-bottom-left-radius: 24px !important;
+      border-bottom-right-radius: 24px !important;
+      .ant-collapse-content-box {
+        padding-bottom: 48px !important;
+        padding-top: 0;
+        padding-left: 26px;
+        padding-right: 26px;
+        color: $light-body;
+        @extend .body;
+      }
+    }
+    .ant-collapse-item-active {
+      .ant-collapse-header {
+        color: $focused;
+        border-radius: 0 !important;
+        border-top-left-radius: 24px !important;
+        border-top-right-radius: 24px !important;
+        @extend .bold-body;
+      }
+    }
+  }
+  // End Collapse Faq
+}
+.dark-mode {
+  background-color: $dark-background;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $dark-border-col;
+  }
+  //***************************
+  // Start Swiper
+  //***************************
+  .swiper {
+    height: 640px;
+    .swiper-pagination-bullet-active {
+      width: 24px;
+      height: 10px !important;
+      border-radius: 0;
+      background-color: $focused !important;
+    }
+    .swiper-pagination-bullet {
+      width: 24px;
+      height: 10px !important;
+      background-color: $dark-border-col;
+      transform: inherit !important;
+      border-radius: 0 !important;
+    }
+    .swiper-pagination-bullet:last-child {
+      width: 10px !important;
+      height: 10px !important;
+    }
+  }
+  //***************************
+  // End Swiper
+  //***************************
+
+  //***************************
+  // Start Back To Top
+  //***************************
+
+  .ant-back-top {
+    left: 33px;
+  }
+
+  //***************************
+  // End Back To Top
+  //***************************
+
+  //***************************
+  // Start Menu Drawer
+  //***************************
+  .menu-drawer {
+    .ant-drawer-body {
+      padding: 0;
+    }
+  }
+  //***************************
+  // End Menu Drawer
+  //***************************
+
+  //***************************
+  // Start Drawer
+  //***************************
+  .ant-drawer {
+    .ant-drawer-content {
+      background-color: $dark-background;
+    }
+  }
+  //***************************
+  // End Drawer
+  //***************************
+
+  //***************************
+  // Start Phone
+  //***************************
+  .react-tel-input {
+    z-index: 99 !important;
+    .flag-dropdown {
+      .open {
+        .arrow {
+          background-image: url("/svgs/dark/arrow-up-icon.svg");
+          width: 20px;
+          height: 20px;
+          background-position: center;
+          position: absolute;
+          transform: translateY(-50%);
+          background-repeat: no-repeat;
+          right: 5px;
+          border: 0;
+        }
+      }
+    }
+  }
+  .react-tel-input .country-list {
+    border: 1px solid $dark-border !important;
+    background-color: $dark-background !important;
+    box-shadow: 0 0 0 !important;
+    border-radius: 8px !important;
+    padding-bottom: 10px;
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: $dark-background2 !important;
+      border-radius: 8px !important;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: $dark-border-col !important;
+      border-radius: 0px !important;
+    }
+    .country {
+      .country-name {
+        color: $dark-body;
+      }
+      .dial-code {
+        color: $dark-border-col !important;
+      }
+    }
+  }
+  .react-tel-input .country-list .country:hover {
+    background-color: $dark-background2 !important;
+  }
+  .react-tel-input .selected-flag {
+    border-radius: 8px;
+  }
+  .react-tel-input .form-control {
+    height: 45px;
+    background-color: $dark-background2 !important;
+    border: 0;
+    border-radius: 8px;
+    padding-left: 60px;
+    width: 100%;
+    color: $dark-body !important;
+    @extend .body;
+    &::placeholder {
+      color: $dark-border-col !important;
+    }
+    &:focus {
+      border: 2px solid $focused !important;
+      box-shadow: 0 0 0;
+    }
+  }
+  .react-tel-input .flag-dropdown {
+    background-color: $dark-background2 !important;
+    border: 0;
+    border-radius: 8px !important;
+    height: 90%;
+    top: 2px;
+    left: 2px;
+    .highlight {
+      background-color: $focused !important;
+    }
+  }
+  .react-tel-input .flag-dropdown.open .selected-flag {
+    background-color: $dark-background2 !important;
+  }
+  .react-tel-input .selected-flag:hover,
+  .react-tel-input .selected-flag:focus {
+    background-color: $dark-background2 !important;
+  }
+  .react-tel-input .selected-flag .arrow {
+    background-image: url("/svgs/dark/arrow-down-icon.svg");
+    width: 20px;
+    height: 20px;
+    background-position: center;
+    position: absolute;
+    transform: translateY(-50%);
+    background-repeat: no-repeat;
+    right: 5px;
+    border: 0;
+  }
+  .react-tel-input .selected-flag .arrow.up {
+    border: 0;
+  }
+  //***************************
+  // End Phone
+  //***************************
+
+  // Start Collapse Faq
+  .collapse-faq {
+    border: 0;
+    background-color: transparent;
+
+    .ant-collapse-header {
+      background-color: $dark-background;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      padding-left: 26px;
+      padding-right: 80px;
+      overflow: hidden;
+      color: $dark-body;
+    }
+    .ant-collapse-item {
+      @extend .bold-body;
+      border-bottom: 0;
+      .ant-collapse-header {
+        border-radius: 24px;
+      }
+    }
+    .ant-collapse-content {
+      border-top: 0;
+      border-bottom-left-radius: 24px !important;
+      border-bottom-right-radius: 24px !important;
+      background-color: $dark-background;
+
+      .ant-collapse-content-box {
+        padding-bottom: 48px !important;
+        padding-top: 0;
+        padding-left: 26px;
+        padding-right: 26px;
+        color: $dark-body;
+        @extend .body;
+      }
+    }
+    .ant-collapse-item-active {
+      .ant-collapse-header {
+        color: $focused;
+        border-radius: 0 !important;
+        border-top-left-radius: 24px !important;
+        border-top-right-radius: 24px !important;
+        @extend .bold-body;
+      }
+    }
+  }
+  // End Collapse Faq
+}
+
+@media only screen and (max-width: 768px) {
+  .light-mode {
+    .swiper {
+      height: 360px;
+    }
+    .header2 {
+      font-size: 24px !important;
+    }
+    .collapse-faq {
+      .ant-collapse-header {
+        border-radius: 0 !important;
+      }
+      .ant-collapse-content {
+        border-radius: 0 !important;
+      }
+      .ant-collapse-item-active {
+        .ant-collapse-header {
+          border-radius: 0 !important;
+        }
+      }
+    }
+  }
+  .dark-mode {
+    .swiper {
+      height: 360px;
+    }
+    .header2 {
+      font-size: 24px !important;
+    }
+    .collapse-faq {
+      .ant-collapse-header {
+        border-radius: 0 !important;
+      }
+      .ant-collapse-content {
+        border-radius: 0 !important;
+      }
+      .ant-collapse-item-active {
+        .ant-collapse-header {
+          border-radius: 0 !important;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,83 @@
+@import "../theme/index";
+.closeButton {
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  box-shadow: 0 0 0px;
+}
+.lightMoon {
+  color: $dark-body;
+  background-color: $light-background2;
+  border: 0;
+  box-shadow: 0 0 0px;
+  border-radius: 50%;
+  padding: 0;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @extend .body;
+  &:hover {
+    color: $dark-body;
+    background-color: $light-background2;
+  }
+  &:focus {
+    color: $dark-body;
+    background-color: $light-background2;
+  }
+}
+.darkMoon {
+  color: $dark-body;
+  background-color: $dark-background2;
+  border: 0;
+  box-shadow: 0 0 0px;
+  border-radius: 50%;
+  padding: 0;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @extend .body;
+  &:hover {
+    color: $dark-body;
+    background-color: $dark-background2;
+  }
+  &:focus {
+    color: $dark-body;
+    background-color: $dark-background2;
+  }
+}
+.lightLink {
+  @extend .body;
+  color: $light-body;
+}
+.darkLink {
+  @extend .body;
+  color: $dark-body;
+}
+.activeLightLink {
+  @extend .bold-body;
+  color: $light-body;
+  &::before {
+    content: "";
+    background-color: $focused;
+    width: 8px;
+    height: 31px;
+    position: absolute;
+    left: 0;
+  }
+}
+.activeDarkLink {
+  @extend .bold-body;
+  color: $dark-body;
+  &::before {
+    content: "";
+    background-color: $focused;
+    width: 8px;
+    height: 31px;
+    position: absolute;
+    left: 0;
+  }
+}

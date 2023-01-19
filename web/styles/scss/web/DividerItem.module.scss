@@ -1,0 +1,11 @@
+@import "../theme/index";
+.lightText {
+  @extend .header2;
+  color: $light-body;
+  margin-bottom: 0;
+}
+.darkText {
+  @extend .header2;
+  color: $dark-body;
+  margin-bottom: 0;
+}

@@ -1,0 +1,129 @@
+@import "../theme/index";
+.lightWrapper {
+  background-color: $light-background2;
+}
+.darkWrapper {
+  background-color: $dark-background2;
+}
+.lightText {
+  @extend .subtitle;
+  color: $light-body;
+  span {
+    font-weight: bolder;
+  }
+}
+.darkText {
+  @extend .subtitle;
+  color: $dark-body;
+  span {
+    font-weight: bolder;
+  }
+}
+.lightWrapperForm {
+  background-color: $light-background;
+  border-radius: 24px;
+  padding: 16px;
+  margin-left: auto;
+  margin-right: auto;
+  .lightTitle {
+    @extend .header3;
+    color: $dark-body;
+    margin: 0;
+  }
+  .lightText {
+    margin-top: 40px;
+    @extend .body;
+    color: $dark-body;
+  }
+  .lightPhone {
+    color: $dark-body;
+    margin-bottom: 0;
+    padding-left: 16px;
+    @extend .body;
+  }
+}
+.darkWrapperForm {
+  background-color: $dark-background;
+  border-radius: 24px;
+  padding: 16px;
+  margin-left: auto;
+  margin-right: auto;
+  .darkTitle {
+    @extend .header3;
+    color: $dark-body;
+    margin: 0;
+  }
+  .darkText {
+    margin-top: 40px;
+    @extend .body;
+    color: $dark-body;
+  }
+  .darkPhone {
+    color: $dark-body;
+    margin-bottom: 0;
+    padding-left: 16px;
+    @extend .body;
+  }
+}
+.wrapperInfo {
+  background-color: $focused;
+  border-radius: 24px;
+  padding: 40px 24px;
+  overflow: hidden;
+  position: relative;
+  .info {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+  }
+}
+.orangeCircle {
+  background-color: $warn;
+  width: 151px;
+  height: 151px;
+  border-radius: 50%;
+  position: absolute;
+  right: -40px;
+  bottom: -40px;
+  .innerCircle {
+    background-color: #5555a5;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    position: absolute;
+    left: -5px;
+    top: -5px;
+  }
+}
+.button {
+  color: $dark-body;
+  background-color: $focused;
+  border-radius: 8px;
+  border: 0;
+  box-shadow: 0 0 0px;
+  width: 186px;
+  height: 45px;
+  @extend .button;
+  &:hover {
+    color: $dark-body;
+    background-color: $focused;
+  }
+  &:focus {
+    color: $dark-body;
+    background-color: $focused;
+  }
+}
+@media only screen and (max-width: 1024px) {
+}
+
+@media only screen and (max-width: 768px) {
+  .lightWrapperForm {
+    border-radius: 0;
+    padding: 8px;
+  }
+  .darkWrapperForm {
+    border-radius: 0;
+    padding: 8px;
+  }
+}

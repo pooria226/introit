@@ -1,0 +1,33 @@
+@import "../theme/index";
+.lightWrapper {
+  background-color: $light-background2;
+}
+.darkWrapper {
+  background-color: $dark-background2;
+}
+.lightTitle {
+  @extend .header3;
+  color: $light-body;
+}
+.darkTitle {
+  @extend .header3;
+  color: $dark-body;
+}
+.lightText {
+  @extend .body;
+  color: $light-body;
+  padding-left: 8px;
+  padding-right: 8px;
+  a {
+    color: $focused;
+  }
+}
+.darkText {
+  @extend .body;
+  color: $dark-body;
+  padding-left: 8px;
+  padding-right: 8px;
+  a {
+    color: $focused;
+  }
+}

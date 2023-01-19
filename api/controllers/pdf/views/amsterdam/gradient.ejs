@@ -1,0 +1,935 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=PT+Sans+Caption:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    body {
+      margin: 0;
+    }
+    body,
+    div,
+    p,
+    span,
+    a {
+      font-family: "PT Sans Caption", sans-serif !important ;
+    }
+    .wrapper {
+      background-image: linear-gradient(#f6ecff, #ebedff, #e5f4ff);
+      width: 100%;
+
+      width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      display: -webkit-flex;
+    }
+    .content {
+      width: calc(960px - 384px);
+      margin-right: 24px;
+      padding-left: 24px;
+      height: auto;
+      display: flex;
+      display: -webkit-flex;
+    }
+    .sidebar {
+      width: 384px;
+    }
+    .fullname {
+      color: #2e2725;
+      font-weight: 700;
+      font-size: 32px;
+      margin-top: 58px;
+      margin-bottom: 0;
+      text-align: center;
+      font-family: "poppins-bold";
+    }
+    .jobtitle {
+      color: #2e2725;
+      font-weight: 400;
+      font-size: 16px;
+      margin-top: 4px;
+      margin-bottom: 0;
+      text-align: center;
+      font-family: "light-bold";
+    }
+    .divider {
+      font-family: "poppins-bold";
+      font-weight: 700;
+      font-size: 24px;
+      text-align: center;
+      letter-spacing: 0.095em;
+      text-transform: uppercase;
+      color: #2e2725;
+      height: 45px;
+      line-height: 2;
+    }
+    .discretion {
+      font-weight: 400;
+      font-size: 16px;
+      text-align: justify;
+      color: #2e2725;
+      line-height: 20px;
+      margin-top: 30px;
+      font-family: "poppins-light";
+    }
+    .margin-top {
+      margin-top: 71px;
+    }
+    .education {
+      margin-top: 30px;
+    }
+    .education div p {
+      margin-bottom: 4px;
+      margin-top: 4px;
+      font-family: "poppins-light";
+    }
+    .education .title {
+      color: #2e2725;
+      font-weight: 700;
+      font-size: 16px;
+      text-transform: capitalize;
+      color: #2e2725;
+      font-family: "poppins-bold";
+    }
+    .detail-item {
+      color: #2e2725;
+      margin-left: 24px;
+    }
+    .detail-item .type {
+      font-weight: 400;
+      font-size: 16px;
+      letter-spacing: 0.025em;
+      margin: 0;
+      font-family: "poppins-light";
+    }
+    .detail-item .value {
+      font-family: "poppins-bold";
+      font-weight: 700;
+      font-size: 16px;
+      color: #2e2725;
+      margin-top: 4px;
+      margin-bottom: 0;
+      text-decoration: none;
+    }
+    .portfolio .image-wrapper {
+      margin-left: 35px;
+    }
+    .portfolio img {
+      width: 154px;
+      height: 154px;
+      margin-right: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #2e2725;
+    }
+    .portfolio .title {
+      font-family: "poppins-bold";
+      font-weight: 700;
+      font-size: 16px;
+      color: #2e2725;
+    }
+    .portfolio .image-link {
+      font-family: "poppins-light";
+      font-weight: 400;
+      font-size: 12px;
+      color: #2e2725;
+    }
+    .portfolio .image-link span {
+      font-family: "poppins-bold";
+      font-weight: 700;
+      font-size: 12px;
+      color: #2e2725;
+    }
+    .portfolio .video-link {
+      font-family: "poppins-light";
+      font-weight: 400;
+      font-size: 12px;
+      color: #2e2725;
+    }
+    .portfolio .video-link span {
+      font-family: "poppins-bold";
+      font-weight: 700;
+      font-size: 12px;
+      color: #2e2725;
+    }
+    .award {
+      padding-top: 24px;
+    }
+    .award .wrapper-title-award {
+      display: flex;
+      display: -webkit-flex;
+    }
+    .award .wrapper-title-award .date {
+      margin-left: auto;
+    }
+    .award .wrapper-title-award p {
+      white-space: nowrap;
+      margin-bottom: 0;
+    }
+    .award .wrapper-title-award .title {
+      font-weight: 700;
+      font-size: 16px;
+      font-family: "poppins-bold";
+      text-transform: capitalize;
+      color: #2e2725;
+    }
+    .award .wrapper-text p {
+      margin-top: 8px;
+      margin-bottom: 0;
+    }
+    .pure-divider {
+      margin-left: 24px;
+      font-family: "poppins-bold";
+      font-weight: 700;
+      font-size: 24px;
+      letter-spacing: 0.095em;
+      text-transform: uppercase;
+      color: #2e2725;
+    }
+    .progress-bar {
+      margin-left: 24px;
+      margin-bottom: 48px;
+    }
+    .progress-bar p {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    .progress-bar .title {
+      font-weight: 700;
+      font-size: 14px;
+      color: #2e2725;
+      font-family: "poppins-bold";
+    }
+    .progress-bar .text {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 18px;
+      font-family: "poppins-light";
+      color: #2e2725;
+      margin-left: auto;
+    }
+    .progress-bar .wrapper-detail {
+      display: flex;
+      display: -webkit-flex;
+    }
+    .progress-bar .wrapper-progress {
+      margin-top: 16px;
+      background: rgba(46, 39, 37, 0.2);
+      width: 100%;
+      height: 8px;
+      border-radius: 8px;
+      position: relative;
+    }
+    .progress-bar .wrapper-progress .progress {
+      background-color: #9bdae9;
+      height: 8px;
+      border-radius: 8px;
+    }
+    .progress-bar .wrapper-progress .circle {
+      position: absolute;
+      background: #9bdae9;
+      border: 2px solid #ffffff;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      top: -5px;
+    }
+    .course {
+      margin-left: 24px;
+    }
+    .course .title p {
+      font-weight: 700;
+      font-size: 16px;
+      text-transform: capitalize;
+      color: #2e2725;
+      font-family: "poppins-bold";
+      margin-bottom: 4px;
+      margin-top: 0;
+    }
+    .course .date p {
+      font-weight: 400;
+      font-size: 12px;
+      color: #2e2725;
+      font-family: "poppins-light";
+      margin-bottom: 4px;
+      margin-top: 0;
+    }
+    .references {
+      margin-left: 24px;
+    }
+    .references p {
+      margin-top: 0;
+      margin-bottom: 4px;
+    }
+    .references .name p {
+      font-weight: 700;
+      font-size: 16px;
+      text-transform: capitalize;
+      font-family: "poppins-bold";
+      color: #2e2725;
+    }
+    .references .company p {
+      font-weight: 600;
+      font-family: "poppins-bold";
+      font-size: 12px;
+      text-transform: capitalize;
+      color: #2e2725;
+    }
+    .references .email a {
+      font-family: "poppins-light";
+      font-weight: 400;
+      font-size: 12px;
+      color: #2e2725;
+      text-decoration: none;
+    }
+    .references .phone a {
+      font-family: "poppins-light";
+      font-weight: 400;
+      font-size: 12px;
+      color: #2e2725;
+      text-decoration: none;
+    }
+    .socials {
+      display: -webkit-flex;
+      display: flex;
+      width: 150px;
+      flex-wrap: wrap;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .socials .item {
+      width: 33%;
+      margin-bottom: 36px;
+    }
+    .socials .items img {
+      width: 20px;
+      height: 20px;
+    }
+  </style>
+  <body>
+    <div class="wrapper">
+      <div class="content">
+        <div>
+          <div>
+            <p class="fullname">
+              <%= cv.givenName ? cv.givenName : '' %> <%= cv.familyName ?
+              cv.familyName : '' %>
+            </p>
+            <p class="jobtitle"><%= cv.jobTitle ? cv.jobTitle : '' %></p>
+          </div>
+
+          <% if (cv.description ) { %>
+          <div class="margin-top"></div>
+          <!-- Start Divider -->
+          <div class="divider">
+            <p>About Me</p>
+          </div>
+          <!-- End Divider -->
+          <div>
+            <p class="discretion">
+              <%- cv.description ? cv.description : '' %>
+            </p>
+          </div>
+          <% } %> <% if (cv.userEducations.length > 0 ) { %>
+          <!-- Start Margin -->
+          <div class="margin-top"></div>
+          <!-- End Margin -->
+
+          <!-- Start Divider -->
+          <div class="divider">
+            <p>Education</p>
+          </div>
+          <!-- End Divider -->
+
+          <!-- Start Education -->
+          <% cv.userEducations.forEach(function(item,index) { %>
+          <div class="education">
+            <div>
+              <p class="title"><%= item.institute %></p>
+            </div>
+            <div>
+              <p><%= item.country?.title %> <%= item.city?.title %></p>
+            </div>
+            <div>
+              <p>
+                <%= moment(item.fromDate).format('MMM YYYY') %> - <%=
+                moment(item.toDate).format('MMM YYYY') %>
+              </p>
+            </div>
+            <div>
+              <p><%= item?.degree?.title %> , <%= item?.major %></p>
+            </div>
+          </div>
+          <% }); %>
+          <!-- End Education -->
+          <% } %> <% if (cv.userExperiences.length > 0 ) { %>
+          <!-- Start Margin -->
+          <div class="margin-top"></div>
+          <!-- End Margin -->
+
+          <!-- Start Divider -->
+          <div class="divider">
+            <p>Experience</p>
+          </div>
+          <!-- End Divider -->
+
+          <!-- Start Experience -->
+          <% cv.userExperiences.forEach(function(item,index) { %>
+          <div class="education">
+            <div>
+              <p class="title"><%= item.institute %></p>
+            </div>
+            <div>
+              <p><%= item.country?.title %> <%= item.city?.title %></p>
+            </div>
+            <div>
+              <p>
+                <%= moment(item.fromDate).format('MMM YYYY') %> - <%=
+                moment(item.toDate).format('MMM YYYY') %>
+              </p>
+            </div>
+            <div>
+              <p><%= item?.description %></p>
+            </div>
+          </div>
+          <% }); %>
+          <!-- End Experience -->
+          <% } %> <% if (cv.userPortfolios.length > 0 ) { %>
+
+          <!-- Start Margin -->
+          <div class="margin-top"></div>
+          <!-- End Margin -->
+
+          <!-- Start Divider -->
+          <div class="divider">
+            <p>PORTFOLIO</p>
+          </div>
+          <!-- End Divider -->
+
+          <!-- Start Portfolio -->
+          <% cv.userPortfolios.forEach(function(item,index) { %>
+          <div class="portfolio">
+            <div>
+              <p class="title"><%= item?.title %></p>
+            </div>
+            <div class="image-wrapper">
+              <% item?.images.forEach(function(item,index) { %>
+              <img src="<%= item %>" />
+              <img src="<%= item %>" />
+              <% }); %>
+            </div>
+            <div>
+              <p class="image-link">
+                Imaje Link : <span><%= item?.link %></span>
+              </p>
+              <p class="video-link">
+                Video Link : <span><%= item?.videoLink %></span>
+              </p>
+            </div>
+          </div>
+          <!-- End Portfolio -->
+          <% }); %> <% } %> <% if (cv.userExtraActivities.length > 0 ) { %>
+          <!-- Start Margin -->
+          <div class="margin-top"></div>
+          <!-- End Margin -->
+
+          <!-- Start Divider -->
+          <div class="divider">
+            <p>Extra-curricular Activities</p>
+          </div>
+          <!-- End Divider -->
+
+          <!-- Start Extra Activities -->
+          <% cv.userExtraActivities.forEach(function(item,index) { %>
+          <div>
+            <div class="education">
+              <div>
+                <p class="title"><%= item?.title %></p>
+              </div>
+              <div>
+                <p><%= item.country?.title %> <%= item.city?.title %></p>
+              </div>
+              <div>
+                <p>
+                  <%= moment(item.fromDate).format('MMM YYYY') %> - <%=
+                  moment(item.toDate).format('MMM YYYY') %>
+                </p>
+              </div>
+              <div>
+                <p><%= item?.description %></p>
+              </div>
+            </div>
+          </div>
+          <% }); %>
+          <!-- End Extra Activities -->
+
+          <% } %> <% if (cv.hobbies ) { %>
+          <!-- Start Margin -->
+          <div class="margin-top"></div>
+          <!-- End Margin -->
+
+          <!-- Start Divider -->
+          <div class="divider">
+            <p>Hobbies</p>
+          </div>
+          <!-- End Divider -->
+
+          <!-- Start Hobbies -->
+
+          <div class="discretion">
+            <p><%= cv?.hobbies %></p>
+          </div>
+
+          <!-- End Hobbbies -->
+
+          <% } %> <% if (cv.additionalInfo ) { %>
+          <!-- Start Margin -->
+          <div class="margin-top"></div>
+          <!-- End Margin -->
+
+          <!-- Start Divider -->
+          <div class="divider">
+            <p>Additional information</p>
+          </div>
+          <!-- End Divider -->
+
+          <!-- Start Additional -->
+
+          <div class="discretion">
+            <p><%= cv?.additionalInfo %></p>
+          </div>
+
+          <!-- End Additional -->
+          <% } %> <% if (cv.additionalInfo ) { %>
+          <!-- Start Margin -->
+          <div class="margin-top"></div>
+          <!-- End Margin -->
+
+          <!-- Start Divider -->
+          <div class="divider">
+            <p>Publications</p>
+          </div>
+          <!-- End Divider -->
+
+          <!-- Start Publications -->
+
+          <div class="discretion">
+            <p><%= cv?.publications %></p>
+          </div>
+
+          <!-- End Publications -->
+          <% } %> <% if (cv.userAwards.length > 0 ) { %>
+
+          <!-- Start Margin -->
+          <div class="margin-top"></div>
+          <!-- End Margin -->
+
+          <!-- Start Divider -->
+          <div class="divider">
+            <p>HONORS & AWARDs</p>
+          </div>
+          <!-- End Divider -->
+
+          <!-- Start Award -->
+          <% cv.userAwards.forEach(function(item,index) { %>
+          <div class="award">
+            <div class="wrapper-title-award">
+              <div class="title">
+                <p><%= item?.title %></p>
+              </div>
+              <div class="date">
+                <p><%= moment(item.date).format('MMM YYYY') %></p>
+              </div>
+            </div>
+            <div class="wrapper-text">
+              <p><%= item.description %></p>
+            </div>
+          </div>
+          <% }); %>
+          <!-- End Award -->
+          <% } %>
+        </div>
+      </div>
+      <div class="sidebar">
+        <div>
+          <img width="365" height="365" src="<%= cv.avatar %>" />
+        </div>
+
+        <div style="padding-right: 24px">
+          <!-- Start Margin -->
+          <div style="margin-top: 40px"></div>
+          <!-- End Margin -->
+
+          <% if (cv.phone ) { %>
+          <!-- Detail Item -->
+          <div class="detail-item">
+            <p class="type">Phone number :</p>
+            <a href="tel:<%= cv.phone %>" class="value"><%= cv.phone %></a>
+          </div>
+          <!-- Detail Item -->
+          <% } %> <% if (cv.email ) { %>
+
+          <!-- Start Margin -->
+          <div style="margin-top: 16px"></div>
+          <!-- End Margin -->
+
+          <!-- Detail Item -->
+          <div class="detail-item">
+            <p class="type">Email :</p>
+            <a href="mailto:<%= cv.email %>" class="value"><%= cv.email %></a>
+          </div>
+          <!-- Detail Item -->
+          <% } %> <% if (cv.degree ) { %>
+          <!-- Start Margin -->
+          <div style="margin-top: 16px"></div>
+          <!-- End Margin -->
+
+          <!-- Detail Item -->
+          <div class="detail-item">
+            <p class="type">Academic Level :</p>
+            <p class="value"><%= cv.degree?.title %></p>
+          </div>
+          <!-- Detail Item -->
+          <% } %> <% if (cv.drivingLicense ) { %>
+          <!-- Start Margin -->
+          <div style="margin-top: 16px"></div>
+          <!-- End Margin -->
+
+          <!-- Detail Item -->
+          <div class="detail-item">
+            <p class="type">Driving License :</p>
+            <p class="value"><%= cv.drivingLicense?.title %></p>
+          </div>
+          <!-- Detail Item -->
+          <% } %> <% if (cv.streetAddress ) { %>
+          <!-- Start Margin -->
+          <div style="margin-top: 16px"></div>
+          <!-- End Margin -->
+
+          <!-- Detail Item -->
+          <div class="detail-item">
+            <p class="type">Address :</p>
+            <p class="value"><%= cv.streetAddress %></p>
+          </div>
+          <!-- Detail Item -->
+          <% } %> <% if (cv.website ) { %>
+          <!-- Start Margin -->
+          <div style="margin-top: 16px"></div>
+          <!-- End Margin -->
+
+          <!-- Detail Item -->
+          <div class="detail-item">
+            <p class="type">Website :</p>
+            <a href="<%= cv.website %>" class="value"><%= cv.website %></a>
+          </div>
+          <!-- Detail Item -->
+          <% } %> <% if (cv.minSalary || cv.maxSalary ) { %>
+          <!-- Start Margin -->
+          <div style="margin-top: 16px"></div>
+          <!-- End Margin -->
+
+          <!-- Detail Item -->
+          <div class="detail-item">
+            <p class="type">Salary range :</p>
+            <p class="value">
+              $ <%= cv.minSalary %> - <%= cv.maxSalary %> montly
+            </p>
+          </div>
+          <!-- Detail Item -->
+          <% } %> <% if (cv.nationality.title ) { %>
+          <!-- Start Margin -->
+          <div style="margin-top: 16px"></div>
+          <!-- End Margin -->
+
+          <!-- Detail Item -->
+          <div class="detail-item">
+            <p class="type">Nationality :</p>
+            <p class="value"><%= cv.nationality.title %></p>
+          </div>
+          <!-- Detail Item -->
+          <% } %> <% if (cv.gender ) { %>
+          <!-- Start Margin -->
+          <div style="margin-top: 16px"></div>
+          <!-- End Margin -->
+
+          <!-- Detail Item -->
+          <div class="detail-item">
+            <p class="type">Gender :</p>
+            <p class="value"><%= cv.gender.title %></p>
+          </div>
+          <!-- Detail Item -->
+          <% } %> <% if (cv.industry ) { %>
+          <!-- Start Margin -->
+          <div style="margin-top: 16px"></div>
+          <!-- End Margin -->
+
+          <!-- Detail Item -->
+          <div class="detail-item">
+            <p class="type">Industry :</p>
+            <p class="value"><%= cv.industry.title %></p>
+          </div>
+          <!-- Detail Item -->
+          <% } %> <% if (cv?.dateOfBirth ) { %>
+          <!-- Start Margin -->
+          <div style="margin-top: 16px"></div>
+          <!-- End Margin -->
+
+          <!-- Detail Item -->
+          <div class="detail-item">
+            <p class="type">Date Of Birth :</p>
+            <p class="value">
+              <%= moment(cv?.dateOfBirth).format('MMM YYYY') %>
+            </p>
+          </div>
+          <!-- Detail Item -->
+          <% } %> <% if (cv.residentCountry ) { %>
+          <!-- Start Margin -->
+          <div style="margin-top: 16px"></div>
+          <!-- End Margin -->
+
+          <!-- Detail Item -->
+          <div class="detail-item">
+            <p class="type">Place Of Birth :</p>
+            <p class="value"><%= cv.residentCountry.title %></p>
+          </div>
+          <!-- Detail Item -->
+          <% } %> <% if (cv.userSkils.length) { %>
+          <!-- Start Margin -->
+          <div style="margin-top: 64px"></div>
+          <!-- End Margin -->
+
+          <!-- Start Pure Divider -->
+          <div class="pure-divider">
+            <p>Skills</p>
+          </div>
+          <!-- End Pure Divider -->
+
+          <!-- Start Margin -->
+          <div style="margin-top: 40px"></div>
+          <!-- End Margin -->
+
+          <!-- Start Progress -->
+          <% cv.userSkils.forEach(function(item,index) { %>
+          <div class="progress-bar">
+            <div class="wrapper-detail">
+              <div class="title"><p><%= item.title %></p></div>
+              <div class="text"><p><%= item.domination.title %></p></div>
+            </div>
+            <div class="wrapper-progress">
+              <div
+                style="width: <%= item.percentage %>%"
+                class="progress"
+              ></div>
+              <div
+                style="left: <%= item.percentage - 2 %>%"
+                class="circle"
+              ></div>
+            </div>
+          </div>
+          <% }); %>
+          <!-- End Progress -->
+          <% } %> <% if (cv.userLanguages.length) { %>
+          <!-- Start Margin -->
+          <div style="margin-top: 64px"></div>
+          <!-- End Margin -->
+
+          <!-- Start Pure Divider -->
+          <div class="pure-divider">
+            <p>Languages</p>
+          </div>
+          <!-- End Pure Divider -->
+
+          <!-- Start Margin -->
+          <div style="margin-top: 40px"></div>
+          <!-- End Margin -->
+
+          <!-- Start Progress -->
+          <% cv.userLanguages.forEach(function(item,index) { %>
+          <div class="progress-bar">
+            <div class="wrapper-detail">
+              <div class="title"><p><%= item.language?.title %></p></div>
+              <div class="text"><p><%= item.level.title %></p></div>
+            </div>
+            <div class="wrapper-progress">
+              <div
+                style="width: <%= item.percentage %>%"
+                class="progress"
+              ></div>
+              <div
+                style="left: <%= item.percentage - 2 %>%"
+                class="circle"
+              ></div>
+            </div>
+          </div>
+          <% }); %>
+          <!-- End Progress -->
+          <% } %> <% if (cv.userExpertises.length) { %>
+          <!-- Start Margin -->
+          <div style="margin-top: 64px"></div>
+          <!-- End Margin -->
+
+          <!-- Start Pure Divider -->
+          <div class="pure-divider">
+            <p>Expertise</p>
+          </div>
+          <!-- End Pure Divider -->
+
+          <!-- Start Margin -->
+          <div style="margin-top: 40px"></div>
+          <!-- End Margin -->
+
+          <!-- Start Progress -->
+          <% cv.userExpertises.forEach(function(item,index) { %>
+          <div class="progress-bar">
+            <div class="wrapper-detail">
+              <div class="title"><p><%= item?.title %></p></div>
+              <div class="text"><p><%= item.domination.title %></p></div>
+            </div>
+            <div class="wrapper-progress">
+              <div
+                style="width: <%= item.percentage %>%"
+                class="progress"
+              ></div>
+              <div
+                style="left: <%= item.percentage - 2 %>%"
+                class="circle"
+              ></div>
+            </div>
+          </div>
+          <% }); %>
+          <!-- End Progress -->
+          <% } %> <% if (cv.userCourses.length) { %>
+          <!-- Start Margin -->
+          <div style="margin-top: 64px"></div>
+          <!-- End Margin -->
+
+          <!-- Start Pure Divider -->
+          <div class="pure-divider">
+            <p>Courses</p>
+          </div>
+          <!-- End Pure Divider -->
+
+          <!-- Start Margin -->
+          <div style="margin-top: 40px"></div>
+          <!-- End Margin -->
+
+          <!-- Start Course -->
+          <% cv.userCourses.forEach(function(item,index) { %>
+          <div class="course">
+            <div class="title"><p><%= item?.title %></p></div>
+            <div class="date">
+              <p>
+                <%= moment(item.fromDate).format('MMM YYYY') %> - <%=
+                moment(item.toDate).format('MMM YYYY') %>
+              </p>
+            </div>
+          </div>
+          <!-- Start Margin -->
+          <div style="margin-top: 16px"></div>
+          <!-- End Margin -->
+          <% }); %>
+          <!-- End Course -->
+          <% } %> <% if (cv.userInterships.length) { %>
+
+          <!-- Start Margin -->
+          <div style="margin-top: 40px"></div>
+          <!-- End Margin -->
+
+          <!-- Start Pure Divider -->
+          <div class="pure-divider">
+            <p>Internships</p>
+          </div>
+          <!-- End Pure Divider -->
+
+          <!-- Start Margin -->
+          <div style="margin-top: 40px"></div>
+          <!-- End Margin -->
+
+          <!-- Start Internships -->
+          <% cv.userInterships.forEach(function(item,index) { %>
+          <div class="course">
+            <div class="title"><p><%= item?.title %></p></div>
+
+            <div class="date">
+              <p><%= item.country?.title %> <%= item.city?.title %></p>
+            </div>
+            <div class="date">
+              <p>
+                <%= moment(item.fromDate).format('MMM YYYY') %> - <%=
+                moment(item.toDate).format('MMM YYYY') %>
+              </p>
+            </div>
+          </div>
+          <!-- Start Margin -->
+          <div style="margin-top: 16px"></div>
+          <!-- End Margin -->
+          <% }); %>
+          <!-- End Internships -->
+          <% } %> <% if (cv.userReferences.length) { %>
+
+          <!-- Start Margin -->
+          <div style="margin-top: 40px"></div>
+          <!-- End Margin -->
+
+          <!-- Start Pure Divider -->
+          <div class="pure-divider">
+            <p>References</p>
+          </div>
+          <!-- End Pure Divider -->
+
+          <!-- Start Margin -->
+          <div style="margin-top: 40px"></div>
+          <!-- End Margin -->
+
+          <!-- Start References -->
+          <% cv.userReferences.forEach(function(item,index) { %>
+          <!-- Start Margin -->
+          <div style="margin-top: 16px"></div>
+          <!-- End Margin -->
+          <div class="references">
+            <div class="name">
+              <p><%= item?.fullName %></p>
+            </div>
+            <div class="company">
+              <p><%= item?.company %></p>
+            </div>
+            <div class="email">
+              <a href="mailto:<%= item?.email %>">Email : <%= item?.email %></a>
+            </div>
+            <div class="phone">
+              <a href="tel:<%= item?.phone %>">Phone : <%= item?.phone %></a>
+            </div>
+          </div>
+          <% }); %>
+          <!-- End References -->
+          <% } %> <% if (cv.userSocials.length) { %>
+          <!-- Start Margin -->
+          <div style="margin-top: 64px"></div>
+          <!-- End Margin -->
+
+          <!-- Start Social -->
+          <div class="socials">
+            <% cv.userSocials.forEach(function(item,index) { %>
+            <div class="item">
+              <a target="_blank" href="<%= item?.url %>">
+                <img width="20" height="20" src="<%= item?.social?.icon %>" />
+              </a>
+            </div>
+            <% }); %>
+          </div>
+          <!-- End Social -->
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

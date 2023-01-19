@@ -1,0 +1,124 @@
+@import "../theme/index";
+.lighWrapper {
+  background-color: $light-background;
+}
+.darkWrapper {
+  background-color: $dark-background;
+}
+.lightLogin {
+  color: $light-body;
+  background-color: transparent;
+  border: 0;
+  box-shadow: 0 0 0px;
+  @extend .body;
+  margin-right: 16px;
+  padding: 0;
+  height: 38px;
+  &:hover {
+    color: $light-body;
+  }
+  &:focus {
+    color: $light-body;
+  }
+}
+.darkLogin {
+  color: $dark-body;
+  background-color: transparent;
+  border: 0;
+  box-shadow: 0 0 0px;
+  @extend .body;
+  margin-right: 16px;
+  padding: 0;
+  height: 38px;
+  &:hover {
+    color: $dark-body;
+  }
+  &:focus {
+    color: $dark-body;
+  }
+}
+.signup {
+  color: $dark-body;
+  background-color: $focused;
+  border: 0;
+  box-shadow: 0 0 0px;
+  border-radius: 8px;
+  @extend .body;
+  margin-right: 16px;
+  height: 38px;
+  &:hover {
+    color: $dark-body;
+    background-color: $focused;
+  }
+  &:focus {
+    color: $dark-body;
+    background-color: $focused;
+  }
+}
+.lightMoon {
+  color: $dark-body;
+  background-color: $light-background2;
+  border: 0;
+  box-shadow: 0 0 0px;
+  border-radius: 50%;
+  padding: 0;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @extend .body;
+  &:hover {
+    color: $dark-body;
+    background-color: $light-background2;
+  }
+  &:focus {
+    color: $dark-body;
+    background-color: $light-background2;
+  }
+}
+.darkMoon {
+  color: $dark-body;
+  background-color: $dark-background2;
+  border: 0;
+  box-shadow: 0 0 0px;
+  border-radius: 50%;
+  padding: 0;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @extend .body;
+  &:hover {
+    color: $dark-body;
+    background-color: $dark-background2;
+  }
+  &:focus {
+    color: $dark-body;
+    background-color: $dark-background2;
+  }
+}
+.menuBar {
+  padding: 0;
+  border-radius: 0;
+  border: 0;
+  background-color: transparent;
+}
+.loginButton {
+  background-color: $focused;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  &:hover {
+    background-color: $focused;
+  }
+  &:focus {
+    background-color: $focused;
+  }
+}

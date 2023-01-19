@@ -1,0 +1,13 @@
+// tailwind
+@tailwind components;
+@tailwind utilities;
+@import "./scss/theme/index";
+@import "./scss/common/index";
+@import "./scss/web/index";
+a {
+  color: inherit;
+  text-decoration: none !important;
+  &:hover {
+    color: inherit;
+  }
+}

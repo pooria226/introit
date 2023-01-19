@@ -1,0 +1,43 @@
+@import "../theme/index";
+.lightLink {
+  @extend .bold-body;
+  color: $light-body;
+  position: relative;
+  left: 12px;
+  &:hover {
+    color: $light-body;
+  }
+}
+.darkLink {
+  @extend .bold-body;
+  color: $dark-body;
+  position: relative;
+  left: 12px;
+  &:hover {
+    color: $dark-body;
+  }
+}
+.lightUunderline {
+  background-color: $light-body;
+  width: calc(100% + 20px);
+  height: 1.3px;
+  position: absolute;
+  margin-top: 4px;
+  z-index: 1;
+}
+.darkUunderline {
+  background-color: $dark-body;
+  width: calc(100% + 20px);
+  height: 1.3px;
+  position: absolute;
+  margin-top: 4px;
+  z-index: 1;
+}
+.blue {
+  width: 80%;
+  height: 4.6px;
+  background-color: $focused;
+  position: relative;
+  top: -3px;
+  z-index: 2;
+}

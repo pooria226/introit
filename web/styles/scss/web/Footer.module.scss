@@ -1,0 +1,76 @@
+@import "../theme/index";
+.lightWrapper {
+  background-color: $light-background2;
+  padding-top: 72px;
+  padding-left: 122px;
+  padding-right: 122px;
+  padding-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.darkWrapper {
+  background-color: $dark-background2;
+  padding-top: 72px;
+  padding-left: 122px;
+  padding-right: 122px;
+  padding-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.seprator {
+  background-color: $light-border;
+  width: 100%;
+  height: 1px;
+}
+.lightLink {
+  color: $light-body;
+  white-space: nowrap;
+  @extend .body;
+  span {
+    @extend .bold-body;
+  }
+  &:hover {
+    color: $light-body;
+  }
+}
+.darkLink {
+  color: $dark-body;
+  white-space: nowrap;
+  @extend .body;
+  span {
+    @extend .bold-body;
+  }
+  &:hover {
+    color: $dark-body;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .lightWrapper {
+    padding-top: 72px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 30px;
+  }
+  .darkWrapper {
+    padding-top: 72px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 30px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .lightWrapper {
+    padding-top: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
+  }
+  .darkWrapper {
+    padding-top: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
+  }
+}

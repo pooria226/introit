@@ -1,0 +1,101 @@
+@import "../theme/index";
+.lightText {
+  color: $light-body;
+  @extend .body;
+  margin-bottom: 0;
+}
+.darkText {
+  color: $dark-body;
+  @extend .body;
+  margin-bottom: 0;
+}
+.lightTraitItem {
+  border: 5px solid $light-border;
+  border-radius: 24px;
+  width: 288px;
+  height: 288px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  position: relative;
+  .lightTitle {
+    @extend .header3;
+    color: $light-body;
+    margin-top: 0;
+    position: relative;
+    z-index: 2;
+  }
+  .lightText {
+    @extend .body;
+    color: $light-body;
+    position: relative;
+    z-index: 2;
+  }
+}
+.darkTraitItem {
+  border: 5px solid $dark-border;
+  border-radius: 24px;
+  width: 288px;
+  height: 288px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  position: relative;
+  .darkTitle {
+    @extend .header3;
+    color: $dark-body;
+    margin-top: 0;
+    position: relative;
+    z-index: 2;
+  }
+  .darkText {
+    @extend .body;
+    color: $dark-body;
+    position: relative;
+    z-index: 2;
+  }
+}
+.icon {
+  margin-top: 47px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.forever {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+.multy {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+}
+@media only screen and (max-width: 1024px) {
+  .lightTraitItem {
+    width: 240px;
+  }
+  .darkTraitItem {
+    width: 240px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .lightTraitItem {
+    margin-bottom: 86px;
+    width: 288px;
+  }
+  .darkTraitItem {
+    margin-bottom: 86px;
+    width: 288px;
+  }
+}

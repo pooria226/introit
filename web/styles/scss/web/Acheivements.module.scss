@@ -1,0 +1,75 @@
+@import "../theme/index";
+.lightText {
+  color: $light-body;
+  @extend .body;
+  margin-bottom: 0;
+  margin-top: 34px;
+}
+
+.darkText {
+  color: $dark-body;
+  @extend .body;
+  margin-bottom: 0;
+  margin-top: 34px;
+}
+.lightAcheivement {
+  border: 2px solid $light-border;
+  border-radius: 24px;
+  width: 172px;
+  height: 172px;
+  margin-left: auto;
+  margin-right: auto;
+  .lightNubmer {
+    @extend .header3;
+    color: $light-body;
+    margin-top: 42px;
+  }
+  .lightText {
+    width: 100px;
+    margin: 0 auto;
+    color: $light-body;
+    @extend .body;
+  }
+  &:hover {
+    border: 5px solid $light-border;
+    .lightNubmer {
+      color: $focused;
+    }
+  }
+}
+.darkAcheivement {
+  border: 2px solid $dark-border;
+  border-radius: 24px;
+  width: 172px;
+  height: 172px;
+  margin-right: 74px;
+  margin-left: auto;
+  margin-right: auto;
+  .darkNumber {
+    @extend .header3;
+    color: $dark-body;
+    margin-top: 42px;
+  }
+  .darkText {
+    width: 100px;
+    color: $dark-body;
+    @extend .body;
+    margin: 0 auto;
+  }
+  &:hover {
+    border: 5px solid $dark-border;
+    .darkNumber {
+      color: $focused;
+    }
+  }
+}
+@media only screen and (max-width: 768px) {
+  .lightAcheivement {
+    width: 288px;
+    margin-bottom: 46px;
+  }
+  .darkAcheivement {
+    width: 288px;
+    margin-bottom: 46px;
+  }
+}
